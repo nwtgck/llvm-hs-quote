@@ -306,7 +306,7 @@ fConstant :
   | 'blockaddress' '(' globalName ',' name ')'
                           { \_ -> A.BlockAddress $3 $5 }
   | 'undef'               { A.Undef }
-  | globalName            { \t -> A.GlobalReference t $1 }
+  | globalName            { \t -> A.GlobalReference (A.PointerType t (A.AddrSpace 0)) $1 }
   
 {- Constants that don't require a type -}
 cConstant :: { A.Constant }
