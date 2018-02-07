@@ -764,6 +764,7 @@ instructions :
 jumpLabel :: { A.Name }
 jumpLabel :
     JUMPLABEL           { A.Name (fromString $1) }
+  | ANTI_ID             { A.AntiName (fromString $1) }
   | {- empty -}         { A.NeedsName }
 
 {------------------------------------------------------------------------------
