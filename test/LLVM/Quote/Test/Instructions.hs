@@ -23,6 +23,15 @@ instruction ty op = [lli| call void @dummy_fuc($type:ty $opr:op) |]
 terminator :: Terminator
 terminator = [llt| ret i32 0 |]
 
+moduleWithLabel :: Name -> Module
+moduleWithLabel lab = [llmod|
+  ; ModuleID = 'simple module'
+  define i32 @myfunc(){
+  $id:lab
+    ret i32 0
+  }
+|]
+
 tests :: TestTree
 tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
   testGroup "regular" [
