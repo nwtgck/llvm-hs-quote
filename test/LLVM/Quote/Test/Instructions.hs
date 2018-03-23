@@ -44,6 +44,14 @@ phi1 ty vName1 vName2 label1 label2 = [lli|phi $type:ty [$id:vName1, $id:label1]
 phi2 :: Type -> Operand -> Operand -> Name -> Name -> Instruction
 phi2 ty op1 op2 label1 label2 = [lli|phi $type:ty [$opr:op1, $id:label1], [$opr:op2, $id:label2]|]
 
+
+retWithName :: Type -> Name -> Terminator
+retWithName ty name = [llt|ret $type:ty $id:name|]
+
+retWithOp :: Type -> Operand -> Terminator
+retWithOp ty op = [llt|ret $type:ty $opr:op|]
+
+
 tests :: TestTree
 tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
   testGroup "regular" [
