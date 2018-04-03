@@ -514,7 +514,7 @@ clauses :
 
 phiItem :: { A.Type -> (A.Operand, A.Name) }
 phiItem :
-    '[' operand ',' name ']'     { \t -> ($2 t, $4) }
+    '[' coperand ',' name ']'    { \t -> ($2 t, $4) }
 
 phiList :: { A.Type -> RevList (A.Operand, A.Name) }
 phiList :
