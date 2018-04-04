@@ -324,7 +324,6 @@ tConstant :: { A.Constant }
 tConstant :
     type constant         { $2 $1 }
   | cConstant             { $1 }
-  | constantExpression      { $1 }
 
 mConstant :: { A.Type -> Maybe A.Constant }
 mConstant :

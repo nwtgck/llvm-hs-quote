@@ -54,6 +54,9 @@ retWithOp ty op = [llt|ret $type:ty $opr:op|]
 usingConstantBitcast :: Instruction
 usingConstantBitcast  = [lli|call void @myfunc(i8* bitcast (i1* @myglobal to i8*))|]
 
+usingNestedConstantBitcast :: Instruction
+usingNestedConstantBitcast  = [lli|call void @myfunc(i8* bitcast (i3* bitcast (i1* @myglobal to i3*) to i8*))|]
+
 tests :: TestTree
 tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
   testGroup "regular" [
