@@ -597,6 +597,10 @@ data Constant
         address'  :: Constant,
         indices'' :: [Constant]
       }
+    | PtrToInt' {
+        operand0'' :: Constant,
+        type''     :: Type
+      }
     | BitCast' {
         operand0'' :: Constant,
         type'' :: Type

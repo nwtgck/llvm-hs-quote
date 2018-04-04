@@ -710,12 +710,24 @@ tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
                   callingConvention = CC.C,
                   returnAttributes = [],
                   function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [ptr i8] False)) (Name "myfunc"))),
-                  arguments = [ (ConstantOperand (C.GetElementPtr True ((C.GlobalReference (ptr (ArrayType 4 i8)) (Name "myglobal_str"))) [C.Int 32 0, C.Int 32 0]), [])
+                  arguments = [ (ConstantOperand (C.GetElementPtr True (C.GlobalReference (ptr (ArrayType 4 i8)) (Name "myglobal_str")) [C.Int 32 0, C.Int 32 0]), [])
                               ],
                   functionAttributes = [],
                   metadata = []
                 },
-                [lli|call void @myfunc(i8* getelementptr inbounds ([4 x i8]* @myglobal_str, i32 0, i32 0))|])
+                [lli|call void @myfunc(i8* getelementptr inbounds ([4 x i8]* @myglobal_str, i32 0, i32 0))|]),
+               ("call with constant ptrtoint",
+                Call {
+                  tailCallKind = Nothing,
+                  callingConvention = CC.C,
+                  returnAttributes = [],
+                  function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [i32] False)) (Name "myfunc2"))),
+                  arguments = [ (ConstantOperand (C.PtrToInt (C.GlobalReference (ptr i8) (Name "myptr")) i32), [])
+                              ],
+                  functionAttributes = [],
+                  metadata = []
+                },
+                [lli|call void @myfunc2(i32 ptrtoint (i8* @myptr to i32))|])
          ]
    ],
 

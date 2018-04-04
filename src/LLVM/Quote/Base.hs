@@ -624,6 +624,8 @@ qqConstantE (A.BitCast' x1 x2) =
   [||LConstant.BitCast <$> $$(qqExpM x1) <*> $$(qqExpM x2)||]
 qqConstantE (A.GetElementPtr' x1 x2 x3) =
   [||LConstant.GetElementPtr <$> $$(qqExpM x1) <*> $$(qqExpM x2) <*> $$(qqExpM x3)||]
+qqConstantE (A.PtrToInt' x1 x2) =
+  [||LConstant.PtrToInt <$> $$(qqExpM x1) <*> $$(qqExpM x2)||]
 
 qqNameE :: Conversion A.Name L.Name
 qqNameE (A.Name x1) =

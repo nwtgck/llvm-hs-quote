@@ -342,6 +342,7 @@ constantIndices :
 constantExpression :
     'add' nsw nuw '(' tConstant ',' tConstant ')'                { A.Add' $2 $3 $5 $7 }
   | 'fadd' '(' tConstant ',' tConstant ')'                       { A.FAdd' $3 $5 }
+  | 'ptrtoint' '(' tConstant 'to' type ')'                       { A.PtrToInt' $3 $5 }
   | 'bitcast' '(' tConstant 'to' type ')'                        { A.BitCast' $3 $5 }
   | 'getelementptr' inBounds '(' tConstant constantIndices ')'   { A.GetElementPtr' $2 $4 (rev $5) }
 
