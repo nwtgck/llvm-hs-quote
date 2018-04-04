@@ -307,16 +307,17 @@ fConstant :
                           { \_ -> A.BlockAddress $3 $5 }
   | 'undef'               { A.Undef }
   | globalName            { \t -> A.GlobalReference t $1 }
-  
+
 {- Constants that don't require a type -}
 cConstant :: { A.Constant }
 cConstant :
     ANTI_CONST            { A.AntiConstant (fromString $1) }
   | CSTRING               { A.Array (A.IntegerType 8) (map (A.Int 8 . fromIntegral . ord) $1) }
-    
+  | constantExpression    { $1 }
+
 constant :: { A.Type -> A.Constant }
 constant :
-    fConstant             { $1 }  
+    fConstant             { $1 }
   | cConstant             { \_ -> $1 }
 
 tConstant :: { A.Constant }
@@ -328,7 +329,15 @@ mConstant :: { A.Type -> Maybe A.Constant }
 mConstant :
     {- empty -}            { \_ -> Nothing }
   | constant               { Just . $1 }
-  
+
+{- Constant expressions -}
+{- from https://llvm.org/docs/LangRef.html#constant-expressions -}
+{- TODO: Implement other constant expressions -}
+constantExpression :
+    'add' nsw nuw '(' tConstant ',' tConstant ')'    { A.Add' $2 $3 $5 $7 }
+  | 'fadd' '(' tConstant ',' tConstant ')'           { A.FAdd' $3 $5 }
+  | 'bitcast' '(' tConstant 'to' type ')'            { A.BitCast' $3 $5 }
+
 constantList :: { RevList A.Constant }
 constantList :
     tConstant                    { RCons $1 RNil }
@@ -728,7 +737,6 @@ instruction_ :
 instruction :: { A.Instruction }
 instruction :
     instruction_ instructionMetadata   { $1 (rev $2) }
-  | tOperand                           { A.OperandInstruction $1 }
 
 name :: { A.Name }
 name :
