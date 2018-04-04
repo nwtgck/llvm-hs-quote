@@ -334,7 +334,7 @@ mConstant :
 {- from https://llvm.org/docs/LangRef.html#constant-expressions -}
 {- TODO: Implement other constant expressions -}
 constantExpression :
-     'bitcast' '(' tConstant 'to' type ')'    { A.BitCastConstant $3 $5 }
+     'bitcast' '(' tConstant 'to' type ')'    { A.BitCast' $3 $5 }
 
 constantList :: { RevList A.Constant }
 constantList :

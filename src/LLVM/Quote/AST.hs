@@ -582,7 +582,7 @@ data Constant
     | GlobalReference Type Name
     | AntiConstant ShortByteString
     {- TODO: Implement other constant expressions -}
-    | BitCastConstant {
+    | BitCast' {
         operand0'' :: Constant,
         type'' :: Type
       }
