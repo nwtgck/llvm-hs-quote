@@ -330,13 +330,20 @@ mConstant :
     {- empty -}            { \_ -> Nothing }
   | constant               { Just . $1 }
 
+constantIndices :: { RevList A.Constant }
+constantIndices :
+    {- empty -}                     { RNil }
+  | constantIndices ',' tConstant   { RCons $3 $1 }
+
+
 {- Constant expressions -}
 {- from https://llvm.org/docs/LangRef.html#constant-expressions -}
 {- TODO: Implement other constant expressions -}
 constantExpression :
-    'add' nsw nuw '(' tConstant ',' tConstant ')'    { A.Add' $2 $3 $5 $7 }
-  | 'fadd' '(' tConstant ',' tConstant ')'           { A.FAdd' $3 $5 }
-  | 'bitcast' '(' tConstant 'to' type ')'            { A.BitCast' $3 $5 }
+    'add' nsw nuw '(' tConstant ',' tConstant ')'                { A.Add' $2 $3 $5 $7 }
+  | 'fadd' '(' tConstant ',' tConstant ')'                       { A.FAdd' $3 $5 }
+  | 'bitcast' '(' tConstant 'to' type ')'                        { A.BitCast' $3 $5 }
+  | 'getelementptr' inBounds '(' tConstant constantIndices ')'   { A.GetElementPtr' $2 $4 (rev $5) }
 
 constantList :: { RevList A.Constant }
 constantList :

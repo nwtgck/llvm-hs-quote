@@ -691,7 +691,31 @@ tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
                    functionAttributes = [],
                    metadata = []
                  },
-                 [lli|call void @myfunc3(float fadd (float 0.5, float 0.25))|])
+                 [lli|call void @myfunc3(float fadd (float 0.5, float 0.25))|]),
+               ("call with constant getelementptr inbounds",
+                 Call {
+                   tailCallKind = Nothing,
+                   callingConvention = CC.C,
+                   returnAttributes = [],
+                   function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [ptr i8] False)) (Name "myfunc"))),
+                   arguments = [ (ConstantOperand (C.GetElementPtr False ((C.GlobalReference (ptr (ArrayType 4 i8)) (Name "myglobal_str"))) [C.Int 32 0, C.Int 32 0]), [])
+                               ],
+                   functionAttributes = [],
+                   metadata = []
+                 },
+                 [lli|call void @myfunc(i8* getelementptr ([4 x i8]* @myglobal_str, i32 0, i32 0))|]),
+               ("call with constant getelementptr",
+                Call {
+                  tailCallKind = Nothing,
+                  callingConvention = CC.C,
+                  returnAttributes = [],
+                  function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [ptr i8] False)) (Name "myfunc"))),
+                  arguments = [ (ConstantOperand (C.GetElementPtr True ((C.GlobalReference (ptr (ArrayType 4 i8)) (Name "myglobal_str"))) [C.Int 32 0, C.Int 32 0]), [])
+                              ],
+                  functionAttributes = [],
+                  metadata = []
+                },
+                [lli|call void @myfunc(i8* getelementptr inbounds ([4 x i8]* @myglobal_str, i32 0, i32 0))|])
          ]
    ],
 

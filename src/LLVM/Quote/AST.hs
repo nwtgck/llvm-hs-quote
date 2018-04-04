@@ -592,6 +592,11 @@ data Constant
         operand0'' :: Constant,
         operand1'' :: Constant
       }
+    | GetElementPtr' {
+        inBounds' :: Bool,
+        address'  :: Constant,
+        indices'' :: [Constant]
+      }
     | BitCast' {
         operand0'' :: Constant,
         type'' :: Type
