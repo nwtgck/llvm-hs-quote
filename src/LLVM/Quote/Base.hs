@@ -616,6 +616,8 @@ qqConstantE (A.GlobalReference x1 x2) =
   [||L.GlobalReference <$> $$(qqExpM x1)<*> $$(qqExpM x2)||]
 qqConstantE (A.AntiConstant s) =
   unsafeTExpCoerce [|$(antiVarE s) >>= (return . toConstant)|]
+qqConstantE (A.Add' x1 x2 x3 x4) =
+  [||LConstant.Add <$> $$(qqExpM x1) <*> $$(qqExpM x2) <*> $$(qqExpM x3) <*> $$(qqExpM x4)||]
 qqConstantE (A.BitCast' x1 x2) =
   [||LConstant.BitCast <$> $$(qqExpM x1) <*> $$(qqExpM x2)||]
 

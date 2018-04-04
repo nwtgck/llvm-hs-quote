@@ -51,6 +51,8 @@ retWithName ty name = [llt|ret $type:ty $id:name|]
 retWithOp :: Type -> Operand -> Terminator
 retWithOp ty op = [llt|ret $type:ty $opr:op|]
 
+usingConstantAdd1 :: Instruction
+usingConstantAdd1 = [lli|call void @myfunc2(i32 add (i32 1, i32 2))|]
 
 tests :: TestTree
 tests = let a t = LocalReference t . UnName in testGroup "Instructions" [

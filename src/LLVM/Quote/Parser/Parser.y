@@ -334,7 +334,8 @@ mConstant :
 {- from https://llvm.org/docs/LangRef.html#constant-expressions -}
 {- TODO: Implement other constant expressions -}
 constantExpression :
-     'bitcast' '(' tConstant 'to' type ')'    { A.BitCast' $3 $5 }
+    'add' nsw nuw '(' tConstant ',' tConstant ')'    { A.Add' $2 $3 $5 $7 }
+  | 'bitcast' '(' tConstant 'to' type ')'    { A.BitCast' $3 $5 }
 
 constantList :: { RevList A.Constant }
 constantList :
@@ -735,7 +736,6 @@ instruction_ :
 instruction :: { A.Instruction }
 instruction :
     instruction_ instructionMetadata   { $1 (rev $2) }
-  | tOperand                           { A.OperandInstruction $1 }
 
 name :: { A.Name }
 name :
