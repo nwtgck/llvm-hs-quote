@@ -52,9 +52,6 @@ retWithOp :: Type -> Operand -> Terminator
 retWithOp ty op = [llt|ret $type:ty $opr:op|]
 
 
-usingNestedConstantBitcast :: Instruction
-usingNestedConstantBitcast  = [lli|call void @myfunc(i8* bitcast (i3* bitcast (i1* @myglobal to i3*) to i8*))|]
-
 tests :: TestTree
 tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
   testGroup "regular" [
@@ -630,7 +627,19 @@ tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
               functionAttributes = [],
               metadata = []
             },
-            [lli|call void @myfunc(i8* bitcast (i1* @myglobal to i8*))|])
+            [lli|call void @myfunc(i8* bitcast (i1* @myglobal to i8*))|]),
+            ("call with nested constant bitcast",
+              Call {
+                tailCallKind = Nothing,
+                callingConvention = CC.C,
+                returnAttributes = [],
+                function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [ptr i8] False)) (Name "myfunc"))),
+                arguments = [ (ConstantOperand (C.BitCast (C.BitCast (C.GlobalReference (ptr i1) (Name "myglobal")) (ptr (IntegerType 3))) (ptr i8)), [])
+                            ],
+                functionAttributes = [],
+                metadata = []
+              },
+              [lli|call void @myfunc(i8* bitcast (i3* bitcast (i1* @myglobal to i3*) to i8*))|])
          ]
    ],
 
