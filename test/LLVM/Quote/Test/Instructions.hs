@@ -16,6 +16,7 @@ import qualified LLVM.AST.CallingConvention as CC
 import qualified LLVM.AST.Global as G
 import qualified LLVM.AST.Constant as C
 import qualified LLVM.AST.RMWOperation as RMWOp
+import qualified LLVM.AST.Float as Float
 
 instruction :: Type -> Operand -> Instruction
 instruction ty op = [lli| call void @dummy_fuc($type:ty $opr:op) |]
@@ -687,7 +688,19 @@ tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
                   functionAttributes = [],
                   metadata = []
                 },
-                [lli|call void @myfunc2(i32 add nsw nuw (i32 1, i32 2))|])
+                [lli|call void @myfunc2(i32 add nsw nuw (i32 1, i32 2))|]),
+              ("call with constant fadd",
+                Call {
+                  tailCallKind = Nothing,
+                  callingConvention = CC.C,
+                  returnAttributes = [],
+                  function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [float] False)) (Name "myfunc3"))),
+                  arguments = [ (ConstantOperand (C.FAdd (C.Float (Float.Single 0.5)) (C.Float (Float.Single 0.25))), [])
+                              ],
+                  functionAttributes = [],
+                  metadata = []
+                },
+                [lli|call void @myfunc3(float fadd (float 0.5, float 0.25))|])
          ]
    ],
 

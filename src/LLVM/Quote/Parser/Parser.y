@@ -335,7 +335,8 @@ mConstant :
 {- TODO: Implement other constant expressions -}
 constantExpression :
     'add' nsw nuw '(' tConstant ',' tConstant ')'    { A.Add' $2 $3 $5 $7 }
-  | 'bitcast' '(' tConstant 'to' type ')'    { A.BitCast' $3 $5 }
+  | 'fadd' '(' tConstant ',' tConstant ')'           { A.FAdd' $3 $5 }
+  | 'bitcast' '(' tConstant 'to' type ')'            { A.BitCast' $3 $5 }
 
 constantList :: { RevList A.Constant }
 constantList :

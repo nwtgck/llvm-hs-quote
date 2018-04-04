@@ -582,9 +582,13 @@ data Constant
     | GlobalReference Type Name
     | AntiConstant ShortByteString
     {- TODO: Implement other constant expressions -}
-     | Add' {
+    | Add' {
         nsw' :: Bool,
         nuw' :: Bool,
+        operand0'' :: Constant,
+        operand1'' :: Constant
+      }
+    | FAdd' {
         operand0'' :: Constant,
         operand1'' :: Constant
       }
