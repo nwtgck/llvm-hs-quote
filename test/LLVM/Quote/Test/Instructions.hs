@@ -656,7 +656,7 @@ tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
                    metadata = []
                  },
                  [lli|call void @myfunc2(i32 add nsw (i32 1, i32 2))|]),
-               ("call with constant add nsw",
+               ("call with constant add nuw",
                  Call {
                    tailCallKind = Nothing,
                    callingConvention = CC.C,
@@ -668,7 +668,7 @@ tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
                    metadata = []
                  },
                  [lli|call void @myfunc2(i32 add nuw (i32 1, i32 2))|]),
-               ("call with constant add nsw",
+               ("call with constant add nsw nuw",
                  Call {
                    tailCallKind = Nothing,
                    callingConvention = CC.C,
