@@ -51,6 +51,8 @@ retWithName ty name = [llt|ret $type:ty $id:name|]
 retWithOp :: Type -> Operand -> Terminator
 retWithOp ty op = [llt|ret $type:ty $opr:op|]
 
+usingConstantBitcast :: Instruction
+usingConstantBitcast  = [lli|call void @myfunc(i8* bitcast (i1* @myglobal to i8*))|]
 
 tests :: TestTree
 tests = let a t = LocalReference t . UnName in testGroup "Instructions" [

@@ -313,6 +313,7 @@ cConstant :: { A.Constant }
 cConstant :
     ANTI_CONST            { A.AntiConstant (fromString $1) }
   | CSTRING               { A.Array (A.IntegerType 8) (map (A.Int 8 . fromIntegral . ord) $1) }
+  | constantExpression    { $1 }
     
 constant :: { A.Type -> A.Constant }
 constant :
@@ -323,12 +324,19 @@ tConstant :: { A.Constant }
 tConstant :
     type constant         { $2 $1 }
   | cConstant             { $1 }
+  | constantExpression      { $1 }
 
 mConstant :: { A.Type -> Maybe A.Constant }
 mConstant :
     {- empty -}            { \_ -> Nothing }
   | constant               { Just . $1 }
-  
+
+{- Constant expressions -}
+{- from https://llvm.org/docs/LangRef.html#constant-expressions -}
+{- TODO: Implement other constant expressions -}
+constantExpression :
+     'bitcast' '(' tConstant 'to' type ')'    { A.BitCastConstant $3 $5 }
+
 constantList :: { RevList A.Constant }
 constantList :
     tConstant                    { RCons $1 RNil }

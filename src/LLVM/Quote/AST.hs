@@ -581,6 +581,11 @@ data Constant
     | BlockAddress { blockAddressFunction :: Name, blockAddressBlock :: Name }
     | GlobalReference Type Name
     | AntiConstant ShortByteString
+    {- TODO: Implement other constant expressions -}
+    | BitCastConstant {
+        operand0'' :: Constant,
+        type'' :: Type
+      }
     deriving (Eq, Ord, Read, Show, Typeable, Data)
 
 {- |
