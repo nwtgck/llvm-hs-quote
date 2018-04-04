@@ -51,8 +51,6 @@ retWithName ty name = [llt|ret $type:ty $id:name|]
 retWithOp :: Type -> Operand -> Terminator
 retWithOp ty op = [llt|ret $type:ty $opr:op|]
 
-usingConstantBitcast :: Instruction
-usingConstantBitcast  = [lli|call void @myfunc(i8* bitcast (i1* @myglobal to i8*))|]
 
 usingNestedConstantBitcast :: Instruction
 usingNestedConstantBitcast  = [lli|call void @myfunc(i8* bitcast (i3* bitcast (i1* @myglobal to i3*) to i8*))|]
@@ -620,7 +618,19 @@ tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
              functionAttributes = [],
              metadata = []
            },
-           [lli|call void @0(i32 %0, float %1, i32* %2, i64 %3, i1 %4, <2 x i32> %5, { i32, i32 } %6)|])
+           [lli|call void @0(i32 %0, float %1, i32* %2, i64 %3, i1 %4, <2 x i32> %5, { i32, i32 } %6)|]),
+           ("call with constant bitcast",
+            Call {
+              tailCallKind = Nothing,
+              callingConvention = CC.C,
+              returnAttributes = [],
+              function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [ptr i8] False)) (Name "myfunc"))),
+              arguments = [ (ConstantOperand (C.BitCast (C.GlobalReference (ptr i1) (Name "myglobal")) (ptr i8)), [])
+                          ],
+              functionAttributes = [],
+              metadata = []
+            },
+            [lli|call void @myfunc(i8* bitcast (i1* @myglobal to i8*))|])
          ]
    ],
 
