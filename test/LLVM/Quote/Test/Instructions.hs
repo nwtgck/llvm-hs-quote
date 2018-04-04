@@ -51,8 +51,6 @@ retWithName ty name = [llt|ret $type:ty $id:name|]
 retWithOp :: Type -> Operand -> Terminator
 retWithOp ty op = [llt|ret $type:ty $opr:op|]
 
-usingConstantAdd1 :: Instruction
-usingConstantAdd1 = [lli|call void @myfunc2(i32 add (i32 1, i32 2))|]
 
 tests :: TestTree
 tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
@@ -641,7 +639,55 @@ tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
                 functionAttributes = [],
                 metadata = []
               },
-              [lli|call void @myfunc(i8* bitcast (i3* bitcast (i1* @myglobal to i3*) to i8*))|])
+              [lli|call void @myfunc(i8* bitcast (i3* bitcast (i1* @myglobal to i3*) to i8*))|]),
+            ("call with constant add",
+              Call {
+                tailCallKind = Nothing,
+                callingConvention = CC.C,
+                returnAttributes = [],
+                function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [i32] False)) (Name "myfunc2"))),
+                arguments = [ (ConstantOperand (C.Add False False (C.Int 32 1) (C.Int 32 2)), [])
+                            ],
+                functionAttributes = [],
+                metadata = []
+              },
+              [lli|call void @myfunc2(i32 add (i32 1, i32 2))|]),
+              ("call with constant add nsw",
+                Call {
+                  tailCallKind = Nothing,
+                  callingConvention = CC.C,
+                  returnAttributes = [],
+                  function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [i32] False)) (Name "myfunc2"))),
+                  arguments = [ (ConstantOperand (C.Add True False (C.Int 32 1) (C.Int 32 2)), [])
+                              ],
+                  functionAttributes = [],
+                  metadata = []
+                },
+                [lli|call void @myfunc2(i32 add nsw (i32 1, i32 2))|]),
+              ("call with constant add nsw",
+                Call {
+                  tailCallKind = Nothing,
+                  callingConvention = CC.C,
+                  returnAttributes = [],
+                  function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [i32] False)) (Name "myfunc2"))),
+                  arguments = [ (ConstantOperand (C.Add False True (C.Int 32 1) (C.Int 32 2)), [])
+                              ],
+                  functionAttributes = [],
+                  metadata = []
+                },
+                [lli|call void @myfunc2(i32 add nuw (i32 1, i32 2))|]),
+              ("call with constant add nsw",
+                Call {
+                  tailCallKind = Nothing,
+                  callingConvention = CC.C,
+                  returnAttributes = [],
+                  function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [i32] False)) (Name "myfunc2"))),
+                  arguments = [ (ConstantOperand (C.Add True True (C.Int 32 1) (C.Int 32 2)), [])
+                              ],
+                  functionAttributes = [],
+                  metadata = []
+                },
+                [lli|call void @myfunc2(i32 add nsw nuw (i32 1, i32 2))|])
          ]
    ],
 
