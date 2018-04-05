@@ -812,6 +812,30 @@ tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
                    metadata = []
                  },
                  [lli|call void @myfunc3(float fmul (float 0.5, float 0.25))|]),
+               ("call with constant udiv",
+                Call {
+                  tailCallKind = Nothing,
+                  callingConvention = CC.C,
+                  returnAttributes = [],
+                  function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [i32] False)) (Name "myfunc2"))),
+                  arguments = [ (ConstantOperand (C.UDiv False (C.Int 32 4) (C.Int 32 2)), [])
+                              ],
+                  functionAttributes = [],
+                  metadata = []
+                },
+                [lli|call void @myfunc2(i32 udiv (i32 4, i32 2))|]),
+               ("call with constant udiv exact",
+                 Call {
+                   tailCallKind = Nothing,
+                   callingConvention = CC.C,
+                   returnAttributes = [],
+                   function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [i32] False)) (Name "myfunc2"))),
+                   arguments = [ (ConstantOperand (C.UDiv True (C.Int 32 4) (C.Int 32 2)), [])
+                               ],
+                   functionAttributes = [],
+                   metadata = []
+                 },
+                 [lli|call void @myfunc2(i32 udiv exact (i32 4, i32 2))|]),
                ("call with constant getelementptr",
                  Call {
                    tailCallKind = Nothing,

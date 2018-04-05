@@ -346,6 +346,7 @@ constantExpression :
   | 'fsub' '(' tConstant ',' tConstant ')'                       { A.FSub' $3 $5 }
   | 'mul' nsw nuw '(' tConstant ',' tConstant ')'                { A.Mul' $2 $3 $5 $7 }
   | 'fmul' '(' tConstant ',' tConstant ')'                       { A.FMul' $3 $5 }
+  | 'udiv' exact '(' tConstant ',' tConstant ')'                 { A.UDiv' $2 $4 $6 }
   | 'ptrtoint' '(' tConstant 'to' type ')'                       { A.PtrToInt' $3 $5 }
   | 'bitcast' '(' tConstant 'to' type ')'                        { A.BitCast' $3 $5 }
   | 'getelementptr' inBounds '(' tConstant constantIndices ')'   { A.GetElementPtr' $2 $4 (rev $5) }
