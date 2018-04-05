@@ -88,6 +88,8 @@ tokens :-
  "$paramM:"        / { allowAnti } { lexAntiM Tanti_param }
  "$params:"       / { allowAnti } { lexAnti Tanti_params }
  "$paramsM:"       / { allowAnti } { lexAntiM Tanti_params }
+ "$idxs:"          / { allowAnti } { lexAnti Tanti_idxs }
+ "$idxsM:"        / { allowAnti } { lexAntiM Tanti_idxs }
 }
 
 <0> {

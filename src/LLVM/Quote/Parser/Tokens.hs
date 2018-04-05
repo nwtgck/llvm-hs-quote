@@ -253,6 +253,7 @@ data Token
   | Tanti_gid String
   | Tanti_param String
   | Tanti_params String
+  | Tanti_idxs String
   deriving (Eq, Ord)
 
 instance Show Token where
@@ -283,6 +284,7 @@ instance Show Token where
   show (Tanti_gid _) = "ANTI_GID"
   show (Tanti_param _) = "ANTI_PARAM"
   show (Tanti_params _) = "ANTI_PARAMS"
+  show (Tanti_idxs _) = "ANTI_IDXS"
   show Tlparen = "("
   show Trparen = ")"
   show Tlbrack = "["

@@ -236,6 +236,8 @@ instance QQExp A.FastMathFlags L.FastMathFlags where
   qqExpM = qqFastMathFlagsE
 instance QQExp A.InlineAssembly L.InlineAssembly where
   qqExpM = qqInlineAssemblyE
+instance QQExp A.Indices [Word32] where
+  qqExpM = qqIndicesE
 instance QQExp A.Instruction (Either L.Instruction L.Terminator) where
   qqExpM = qqInstructionE
 instance QQExp A.Instruction L.Instruction where
@@ -348,6 +350,12 @@ qqInlineAssemblyE :: Conversion A.InlineAssembly L.InlineAssembly
 qqInlineAssemblyE (A.InlineAssembly x1 x2 x3 x4 x5 x6) =
   [||L.InlineAssembly <$> $$(qqExpM x1) <*> $$(qqExpM x2) <*> $$(qqExpM x3) <*> $$(qqExpM x4)
                       <*> $$(qqExpM x5) <*> $$(qqExpM x6)||]
+
+qqIndicesE :: Conversion A.Indices [Word32]
+qqIndicesE (A.WordIndices idxs) =
+  [||return idxs||]
+qqIndicesE (A.AntiIndices v) =
+  unsafeTExpCoerce $ antiVarE v
 
 qqInstructionE :: Conversion A.Instruction (Either L.Instruction L.Terminator)
 qqInstructionE (A.Add x1 x2 x3 x4 x5) =

@@ -269,6 +269,7 @@ import qualified LLVM.DataLayout as A
  ANTI_GID           { L _ (T.Tanti_gid $$) }
  ANTI_PARAM         { L _ (T.Tanti_param $$) }
  ANTI_PARAMS        { L _ (T.Tanti_params $$) }
+ ANTI_IDXS          { L _ (T.Tanti_idxs $$) }
 
 %monad { P } { >>= } { return }
 %lexer { lexer } { L _ T.Teof }
@@ -604,6 +605,11 @@ idxs :
     idx            { RCons $1 RNil }
   | idxs ',' idx   { RCons $3 $1 }
 
+valueIndices :: { A.Indices }
+valueIndices :
+    idxs           { A.WordIndices (rev $1) }
+  | ANTI_IDXS      { A.AntiIndices (fromString $1) }
+
 destination :: { (A.Constant, A.Name) }
 destination :
     tConstant ',' label    { ($1, $3) }
@@ -714,9 +720,10 @@ instruction_ :
                                             { A.InsertElement $2 $4 $6 }
   | 'shufflevector' tOperand ',' tOperand ',' tConstant
                                             { A.ShuffleVector $2 $4 $6 }
-  | 'extractvalue' tOperand ',' idxs        { A.ExtractValue $2 (rev $4) }
-  | 'insertvalue' tOperand ',' tOperand ',' idxs
-                                            { A.InsertValue $2 $4 (rev $6) }
+  | 'extractvalue' tOperand ',' valueIndices
+                                            { A.ExtractValue $2 $4 }
+  | 'insertvalue' tOperand ',' tOperand ',' valueIndices
+                                            { A.InsertValue $2 $4 $6 }
   | 'landingpad' type cleanup clauses
                                             { A.LandingPad $2 $3 (rev $4) }
   | 'ret' 'void'                            { A.Ret Nothing }

@@ -18,6 +18,8 @@ import qualified LLVM.AST.Constant as C
 import qualified LLVM.AST.RMWOperation as RMWOp
 import qualified LLVM.AST.Float as Float
 
+import qualified Data.Word as Word
+
 instruction :: Type -> Operand -> Instruction
 instruction ty op = [lli| call void @dummy_fuc($type:ty $opr:op) |]
 
@@ -52,6 +54,9 @@ retWithName ty name = [llt|ret $type:ty $id:name|]
 retWithOp :: Type -> Operand -> Terminator
 retWithOp ty op = [llt|ret $type:ty $opr:op|]
 
+
+instrWithIdxs :: [Word.Word32] -> Instruction
+instrWithIdxs indicies = [lli|extractvalue {i32, float} %agg, $idxs:indicies|]
 
 tests :: TestTree
 tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
@@ -453,6 +458,14 @@ tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
              metadata = []
            },
            [lli|extractvalue { i32, i32 } %6, 0|]),
+          let indices = [1]
+          in ("extractvalue with indices",
+           ExtractValue {
+             aggregate = a (StructureType False [i32, i32]) 6,
+             indices' = indices,
+             metadata = []
+           },
+           [lli|extractvalue { i32, i32 } %6, $idxs:indices|]),
           ("insertvalue",
            InsertValue {
              aggregate = a (StructureType False [i32, i32]) 6,
@@ -461,6 +474,15 @@ tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
              metadata = []
            },
            [lli|insertvalue { i32, i32 } %6, i32 %0, 0|]),
+           let indices = [1]
+           in ("insertvalue with indices",
+            InsertValue {
+              aggregate = a (StructureType False [i32, i32]) 6,
+              element = a i32 0,
+              indices' = indices,
+              metadata = []
+            },
+            [lli|insertvalue { i32, i32 } %6, i32 %0, $idxs:indices|]),
           ("landingpad-catch",
            LandingPad {
              type' = StructureType False [

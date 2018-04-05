@@ -17,6 +17,7 @@ module LLVM.Quote.AST (
   InstructionMetadata,
   LandingPadClause(..),
   FastMathFlags(..),
+  Indices(..),
   Instruction(..),
   NamedInstruction(..),
   LabeledInstruction(..),
@@ -174,6 +175,12 @@ data FastMathFlags
       allowReciprocal :: Bool
     }
   deriving (Eq, Ord, Read, Show, Data, Typeable)
+
+-- | Indices for extractvalue and insertvalue
+data Indices
+  =   WordIndices [Word32]
+    | AntiIndices ShortByteString
+  deriving (Eq, Read, Show, Typeable, Data)
 
 -- | non-terminator instructions:
 -- <http://llvm.org/docs/LangRef.html#binaryops>
@@ -457,13 +464,13 @@ data Instruction
     }
   | ExtractValue {
       aggregate :: Operand,
-      indices' :: [Word32],
+      indices' :: Indices,
       metadata :: InstructionMetadata
     }
   | InsertValue {
       aggregate :: Operand,
       element :: Operand,
-      indices' :: [Word32],
+      indices' :: Indices,
       metadata :: InstructionMetadata
     }
   | LandingPad {
@@ -697,6 +704,7 @@ deriving instance Lift Direction
 deriving instance Lift Parameter
 deriving instance Lift NamedInstruction
 deriving instance Lift LabeledInstruction
+deriving instance Lift Indices
 deriving instance Lift Instruction
 deriving instance Lift A.SynchronizationScope
 deriving instance Lift InlineAssembly
