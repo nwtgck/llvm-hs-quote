@@ -692,6 +692,126 @@ tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
                    metadata = []
                  },
                  [lli|call void @myfunc3(float fadd (float 0.5, float 0.25))|]),
+               ("call with constant sub",
+                 Call {
+                   tailCallKind = Nothing,
+                   callingConvention = CC.C,
+                   returnAttributes = [],
+                   function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [i32] False)) (Name "myfunc2"))),
+                   arguments = [ (ConstantOperand (C.Sub False False (C.Int 32 1) (C.Int 32 2)), [])
+                               ],
+                   functionAttributes = [],
+                   metadata = []
+                 },
+                 [lli|call void @myfunc2(i32 sub (i32 1, i32 2))|]),
+               ("call with constant sub nsw",
+                 Call {
+                   tailCallKind = Nothing,
+                   callingConvention = CC.C,
+                   returnAttributes = [],
+                   function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [i32] False)) (Name "myfunc2"))),
+                   arguments = [ (ConstantOperand (C.Sub True False (C.Int 32 1) (C.Int 32 2)), [])
+                               ],
+                   functionAttributes = [],
+                   metadata = []
+                 },
+                 [lli|call void @myfunc2(i32 sub nsw (i32 1, i32 2))|]),
+               ("call with constant sub nuw",
+                 Call {
+                   tailCallKind = Nothing,
+                   callingConvention = CC.C,
+                   returnAttributes = [],
+                   function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [i32] False)) (Name "myfunc2"))),
+                   arguments = [ (ConstantOperand (C.Sub False True (C.Int 32 1) (C.Int 32 2)), [])
+                               ],
+                   functionAttributes = [],
+                   metadata = []
+                 },
+                 [lli|call void @myfunc2(i32 sub nuw (i32 1, i32 2))|]),
+               ("call with constant sub nsw nuw",
+                 Call {
+                   tailCallKind = Nothing,
+                   callingConvention = CC.C,
+                   returnAttributes = [],
+                   function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [i32] False)) (Name "myfunc2"))),
+                   arguments = [ (ConstantOperand (C.Sub True True (C.Int 32 1) (C.Int 32 2)), [])
+                               ],
+                   functionAttributes = [],
+                   metadata = []
+                 },
+                 [lli|call void @myfunc2(i32 sub nsw nuw (i32 1, i32 2))|]),
+               ("call with constant fsub",
+                Call {
+                  tailCallKind = Nothing,
+                  callingConvention = CC.C,
+                  returnAttributes = [],
+                  function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [float] False)) (Name "myfunc3"))),
+                  arguments = [ (ConstantOperand (C.FSub (C.Float (Float.Single 0.5)) (C.Float (Float.Single 0.25))), [])
+                              ],
+                  functionAttributes = [],
+                  metadata = []
+                },
+                [lli|call void @myfunc3(float fsub (float 0.5, float 0.25))|]),
+               ("call with constant mul",
+                  Call {
+                    tailCallKind = Nothing,
+                    callingConvention = CC.C,
+                    returnAttributes = [],
+                    function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [i32] False)) (Name "myfunc2"))),
+                    arguments = [ (ConstantOperand (C.Mul False False (C.Int 32 1) (C.Int 32 2)), [])
+                                ],
+                    functionAttributes = [],
+                    metadata = []
+                  },
+                  [lli|call void @myfunc2(i32 mul (i32 1, i32 2))|]),
+               ("call with constant mul nsw",
+                 Call {
+                   tailCallKind = Nothing,
+                   callingConvention = CC.C,
+                   returnAttributes = [],
+                   function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [i32] False)) (Name "myfunc2"))),
+                   arguments = [ (ConstantOperand (C.Mul True False (C.Int 32 1) (C.Int 32 2)), [])
+                               ],
+                   functionAttributes = [],
+                   metadata = []
+                 },
+                 [lli|call void @myfunc2(i32 mul nsw (i32 1, i32 2))|]),
+               ("call with constant mul nuw",
+                 Call {
+                   tailCallKind = Nothing,
+                   callingConvention = CC.C,
+                   returnAttributes = [],
+                   function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [i32] False)) (Name "myfunc2"))),
+                   arguments = [ (ConstantOperand (C.Mul False True (C.Int 32 1) (C.Int 32 2)), [])
+                               ],
+                   functionAttributes = [],
+                   metadata = []
+                 },
+                 [lli|call void @myfunc2(i32 mul nuw (i32 1, i32 2))|]),
+               ("call with constant mul nsw nuw",
+                 Call {
+                   tailCallKind = Nothing,
+                   callingConvention = CC.C,
+                   returnAttributes = [],
+                   function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [i32] False)) (Name "myfunc2"))),
+                   arguments = [ (ConstantOperand (C.Mul True True (C.Int 32 1) (C.Int 32 2)), [])
+                               ],
+                   functionAttributes = [],
+                   metadata = []
+                 },
+                 [lli|call void @myfunc2(i32 mul nsw nuw (i32 1, i32 2))|]),
+               ("call with constant fmul",
+                 Call {
+                   tailCallKind = Nothing,
+                   callingConvention = CC.C,
+                   returnAttributes = [],
+                   function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [float] False)) (Name "myfunc3"))),
+                   arguments = [ (ConstantOperand (C.FMul (C.Float (Float.Single 0.5)) (C.Float (Float.Single 0.25))), [])
+                               ],
+                   functionAttributes = [],
+                   metadata = []
+                 },
+                 [lli|call void @myfunc3(float fmul (float 0.5, float 0.25))|]),
                ("call with constant getelementptr",
                  Call {
                    tailCallKind = Nothing,
