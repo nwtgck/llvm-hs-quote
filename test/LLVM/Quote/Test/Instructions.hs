@@ -650,20 +650,20 @@ tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
               callingConvention = CC.C,
               returnAttributes = [],
               function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [i32] False)) (Name "myfunc2"))),
-              arguments = [ (ConstantOperand C.Add
-                                            { C.nsw = True
-                                            , C.nuw = False
-                                            , C.operand0 =
-                                              C.Int
-                                              { C.integerBits = 32
-                                              , C.integerValue = 1
-                                              }
-                                            , C.operand1 =
-                                              C.Int
-                                              { C.integerBits = 32
-                                              , C.integerValue = 2
-                                              }
-                                            }, [])
+              arguments = [ ( ConstantOperand C.Add
+                                              { C.nsw = True
+                                              , C.nuw = False
+                                              , C.operand0 =
+                                                C.Int
+                                                { C.integerBits = 32
+                                                , C.integerValue = 1
+                                                }
+                                              , C.operand1 =
+                                                C.Int
+                                                { C.integerBits = 32
+                                                , C.integerValue = 2
+                                                }
+                                              }, [])
                           ],
               functionAttributes = [],
               metadata = []
@@ -675,20 +675,20 @@ tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
               callingConvention = CC.C,
               returnAttributes = [],
               function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [i32] False)) (Name "myfunc2"))),
-              arguments = [ (ConstantOperand C.Add
-                                            { C.nsw = False
-                                            , C.nuw = True
-                                            , C.operand0 =
-                                              C.Int
-                                              { C.integerBits = 32
-                                              , C.integerValue = 1
-                                              }
-                                            , C.operand1 =
-                                              C.Int
-                                              { C.integerBits = 32
-                                              , C.integerValue = 2
-                                              }
-                                            }, [])
+              arguments = [ ( ConstantOperand C.Add
+                                              { C.nsw = False
+                                              , C.nuw = True
+                                              , C.operand0 =
+                                                C.Int
+                                                { C.integerBits = 32
+                                                , C.integerValue = 1
+                                                }
+                                              , C.operand1 =
+                                                C.Int
+                                                { C.integerBits = 32
+                                                , C.integerValue = 2
+                                                }
+                                              }, [])
                           ],
               functionAttributes = [],
               metadata = []
@@ -700,20 +700,20 @@ tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
               callingConvention = CC.C,
               returnAttributes = [],
               function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [i32] False)) (Name "myfunc2"))),
-              arguments = [ (ConstantOperand C.Add
-                                            { C.nsw = True
-                                            , C.nuw = True
-                                            , C.operand0 =
-                                              C.Int
-                                              { C.integerBits = 32
-                                              , C.integerValue = 1
-                                              }
-                                            , C.operand1 =
-                                              C.Int
-                                              { C.integerBits = 32
-                                              , C.integerValue = 2
-                                              }
-                                            }, [])
+              arguments = [ ( ConstantOperand C.Add
+                                              { C.nsw = True
+                                              , C.nuw = True
+                                              , C.operand0 =
+                                                C.Int
+                                                { C.integerBits = 32
+                                                , C.integerValue = 1
+                                                }
+                                              , C.operand1 =
+                                                C.Int
+                                                { C.integerBits = 32
+                                                , C.integerValue = 2
+                                                }
+                                              }, [])
                           ],
               functionAttributes = [],
               metadata = []
@@ -725,16 +725,16 @@ tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
               callingConvention = CC.C,
               returnAttributes = [],
               function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [float] False)) (Name "myfunc3"))),
-              arguments = [ (ConstantOperand C.FAdd
-                                            { C.operand0 =
-                                              C.Float
-                                              { C.floatValue = Float.Single 0.5
-                                              }
-                                            , C.operand1 =
-                                              C.Float
-                                              { C.floatValue = Float.Single 0.25
-                                              }
-                                            }, [])
+              arguments = [ ( ConstantOperand C.FAdd
+                                              { C.operand0 =
+                                                C.Float
+                                                { C.floatValue = Float.Single 0.5
+                                                }
+                                              , C.operand1 =
+                                                C.Float
+                                                { C.floatValue = Float.Single 0.25
+                                                }
+                                              }, [])
                           ],
               functionAttributes = [],
               metadata = []
@@ -746,20 +746,20 @@ tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
               callingConvention = CC.C,
               returnAttributes = [],
               function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [i32] False)) (Name "myfunc2"))),
-              arguments = [ (ConstantOperand C.Sub
-                                            { C.nsw = False
-                                            , C.nuw = False
-                                            , C.operand0 =
-                                              C.Int
-                                              { C.integerBits = 32
-                                              , C.integerValue = 1
-                                              }
-                                            , C.operand1 =
-                                              C.Int
-                                              { C.integerBits = 32
-                                              , C.integerValue = 2
-                                              }
-                                            }, [])
+              arguments = [ ( ConstantOperand C.Sub
+                                              { C.nsw = False
+                                              , C.nuw = False
+                                              , C.operand0 =
+                                                C.Int
+                                                { C.integerBits = 32
+                                                , C.integerValue = 1
+                                                }
+                                              , C.operand1 =
+                                                C.Int
+                                                { C.integerBits = 32
+                                                , C.integerValue = 2
+                                                }
+                                              }, [])
                           ],
               functionAttributes = [],
               metadata = []
@@ -771,20 +771,20 @@ tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
               callingConvention = CC.C,
               returnAttributes = [],
               function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [i32] False)) (Name "myfunc2"))),
-              arguments = [ (ConstantOperand C.Sub
-                                            { C.nsw = True
-                                            , C.nuw = False
-                                            , C.operand0 =
-                                              C.Int
-                                              { C.integerBits = 32
-                                              , C.integerValue = 1
-                                              }
-                                            , C.operand1 =
-                                              C.Int
-                                              { C.integerBits = 32
-                                              , C.integerValue = 2
-                                              }
-                                            }, [])
+              arguments = [ ( ConstantOperand C.Sub
+                                              { C.nsw = True
+                                              , C.nuw = False
+                                              , C.operand0 =
+                                                C.Int
+                                                { C.integerBits = 32
+                                                , C.integerValue = 1
+                                                }
+                                              , C.operand1 =
+                                                C.Int
+                                                { C.integerBits = 32
+                                                , C.integerValue = 2
+                                                }
+                                              }, [])
                           ],
               functionAttributes = [],
               metadata = []
@@ -796,20 +796,20 @@ tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
               callingConvention = CC.C,
               returnAttributes = [],
               function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [i32] False)) (Name "myfunc2"))),
-              arguments = [ (ConstantOperand C.Sub
-                                            { C.nsw = False
-                                            , C.nuw = True
-                                            , C.operand0 =
-                                              C.Int
-                                              { C.integerBits = 32
-                                              , C.integerValue = 1
-                                              }
-                                            , C.operand1 =
-                                              C.Int
-                                              { C.integerBits = 32
-                                              , C.integerValue = 2
-                                              }
-                                            }, [])
+              arguments = [ ( ConstantOperand C.Sub
+                                              { C.nsw = False
+                                              , C.nuw = True
+                                              , C.operand0 =
+                                                C.Int
+                                                { C.integerBits = 32
+                                                , C.integerValue = 1
+                                                }
+                                              , C.operand1 =
+                                                C.Int
+                                                { C.integerBits = 32
+                                                , C.integerValue = 2
+                                                }
+                                              }, [])
                           ],
               functionAttributes = [],
               metadata = []
@@ -821,20 +821,20 @@ tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
               callingConvention = CC.C,
               returnAttributes = [],
               function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [i32] False)) (Name "myfunc2"))),
-              arguments = [ (ConstantOperand C.Sub
-                                            { C.nsw = True
-                                            , C.nuw = True
-                                            , C.operand0 =
-                                              C.Int
-                                              { C.integerBits = 32
-                                              , C.integerValue = 1
-                                              }
-                                            , C.operand1 =
-                                              C.Int
-                                              { C.integerBits = 32
-                                              , C.integerValue = 2
-                                              }
-                                            }, [])
+              arguments = [ ( ConstantOperand C.Sub
+                                              { C.nsw = True
+                                              , C.nuw = True
+                                              , C.operand0 =
+                                                C.Int
+                                                { C.integerBits = 32
+                                                , C.integerValue = 1
+                                                }
+                                              , C.operand1 =
+                                                C.Int
+                                                { C.integerBits = 32
+                                                , C.integerValue = 2
+                                                }
+                                              }, [])
                           ],
               functionAttributes = [],
               metadata = []
@@ -846,7 +846,7 @@ tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
               callingConvention = CC.C,
               returnAttributes = [],
               function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [float] False)) (Name "myfunc3"))),
-              arguments = [ (ConstantOperand C.FSub
+              arguments = [ ( ConstantOperand C.FSub
                                               { C.operand0 =
                                                 C.Float
                                                 { C.floatValue = Float.Single 0.5
@@ -867,7 +867,7 @@ tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
               callingConvention = CC.C,
               returnAttributes = [],
               function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [i32] False)) (Name "myfunc2"))),
-              arguments = [ (ConstantOperand C.Mul
+              arguments = [ ( ConstantOperand C.Mul
                                               { C.nsw = False
                                               , C.nuw = False
                                               , C.operand0 =
@@ -892,20 +892,20 @@ tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
               callingConvention = CC.C,
               returnAttributes = [],
               function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [i32] False)) (Name "myfunc2"))),
-              arguments = [ (ConstantOperand C.Mul
-                                            { C.nsw = True
-                                            , C.nuw = False
-                                            , C.operand0 =
-                                              C.Int
-                                              { C.integerBits = 32
-                                              , C.integerValue = 1
-                                              }
-                                            , C.operand1 =
-                                              C.Int
-                                              { C.integerBits = 32
-                                              , C.integerValue = 2
-                                              }
-                                            }, [])
+              arguments = [ ( ConstantOperand C.Mul
+                                              { C.nsw = True
+                                              , C.nuw = False
+                                              , C.operand0 =
+                                                C.Int
+                                                { C.integerBits = 32
+                                                , C.integerValue = 1
+                                                }
+                                              , C.operand1 =
+                                                C.Int
+                                                { C.integerBits = 32
+                                                , C.integerValue = 2
+                                                }
+                                              }, [])
                           ],
               functionAttributes = [],
               metadata = []
@@ -917,20 +917,20 @@ tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
               callingConvention = CC.C,
               returnAttributes = [],
               function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [i32] False)) (Name "myfunc2"))),
-              arguments = [ (ConstantOperand C.Mul
-                                            { C.nsw = False
-                                            , C.nuw = True
-                                            , C.operand0 =
-                                              C.Int
-                                              { C.integerBits = 32
-                                              , C.integerValue = 1
-                                              }
-                                            , C.operand1 =
-                                              C.Int
-                                              { C.integerBits = 32
-                                              , C.integerValue = 2
-                                              }
-                                            }, [])
+              arguments = [ ( ConstantOperand C.Mul
+                                              { C.nsw = False
+                                              , C.nuw = True
+                                              , C.operand0 =
+                                                C.Int
+                                                { C.integerBits = 32
+                                                , C.integerValue = 1
+                                                }
+                                              , C.operand1 =
+                                                C.Int
+                                                { C.integerBits = 32
+                                                , C.integerValue = 2
+                                                }
+                                              }, [])
                           ],
               functionAttributes = [],
               metadata = []
@@ -942,20 +942,20 @@ tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
               callingConvention = CC.C,
               returnAttributes = [],
               function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [i32] False)) (Name "myfunc2"))),
-              arguments = [ (ConstantOperand C.Mul
-                                            { C.nsw = True
-                                            , C.nuw = True
-                                            , C.operand0 =
-                                              C.Int
-                                              { C.integerBits = 32
-                                              , C.integerValue = 1
-                                              }
-                                            , C.operand1 =
-                                              C.Int
-                                              { C.integerBits = 32
-                                              , C.integerValue = 2
-                                              }
-                                            }, [])
+              arguments = [ ( ConstantOperand C.Mul
+                                              { C.nsw = True
+                                              , C.nuw = True
+                                              , C.operand0 =
+                                                C.Int
+                                                { C.integerBits = 32
+                                                , C.integerValue = 1
+                                                }
+                                              , C.operand1 =
+                                                C.Int
+                                                { C.integerBits = 32
+                                                , C.integerValue = 2
+                                                }
+                                              }, [])
                           ],
               functionAttributes = [],
               metadata = []
@@ -967,16 +967,16 @@ tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
               callingConvention = CC.C,
               returnAttributes = [],
               function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [float] False)) (Name "myfunc3"))),
-              arguments = [ (ConstantOperand C.FMul
-                                            { C.operand0 =
-                                              C.Float
-                                              { C.floatValue = Float.Single 0.5
-                                              }
-                                            , C.operand1 =
-                                              C.Float
-                                              { C.floatValue = Float.Single 0.25
-                                              }
-                                            }, [])
+              arguments = [ ( ConstantOperand C.FMul
+                                              { C.operand0 =
+                                                C.Float
+                                                { C.floatValue = Float.Single 0.5
+                                                }
+                                              , C.operand1 =
+                                                C.Float
+                                                { C.floatValue = Float.Single 0.25
+                                                }
+                                              }, [])
                           ],
               functionAttributes = [],
               metadata = []
@@ -988,7 +988,7 @@ tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
               callingConvention = CC.C,
               returnAttributes = [],
               function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [i32] False)) (Name "myfunc2"))),
-              arguments = [ (ConstantOperand C.UDiv
+              arguments = [ ( ConstantOperand C.UDiv
                                               { C.exact = False
                                               , C.operand0 =
                                                 C.Int
@@ -1012,19 +1012,19 @@ tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
               callingConvention = CC.C,
               returnAttributes = [],
               function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [i32] False)) (Name "myfunc2"))),
-              arguments = [ (ConstantOperand C.UDiv
-                                            { C.exact = True
-                                            , C.operand0 =
-                                              C.Int
-                                              { C.integerBits = 32
-                                              , C.integerValue = 4
-                                              }
-                                            , C.operand1 =
-                                              C.Int
-                                              { C.integerBits = 32
-                                              , C.integerValue = 2
-                                              }
-                                            }, [])
+              arguments = [ ( ConstantOperand C.UDiv
+                                              { C.exact = True
+                                              , C.operand0 =
+                                                C.Int
+                                                { C.integerBits = 32
+                                                , C.integerValue = 4
+                                                }
+                                              , C.operand1 =
+                                                C.Int
+                                                { C.integerBits = 32
+                                                , C.integerValue = 2
+                                                }
+                                              }, [])
                           ],
               functionAttributes = [],
               metadata = []
@@ -1036,19 +1036,19 @@ tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
               callingConvention = CC.C,
               returnAttributes = [],
               function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [i32] False)) (Name "myfunc2"))),
-              arguments = [ (ConstantOperand C.SDiv
-                                            { C.exact = False
-                                            , C.operand0 =
-                                              C.Int
-                                              { C.integerBits = 32
-                                              , C.integerValue = 4
-                                              }
-                                            , C.operand1 =
-                                              C.Int
-                                              { C.integerBits = 32
-                                              , C.integerValue = 2
-                                              }
-                                            }, [])
+              arguments = [ ( ConstantOperand C.SDiv
+                                              { C.exact = False
+                                              , C.operand0 =
+                                                C.Int
+                                                { C.integerBits = 32
+                                                , C.integerValue = 4
+                                                }
+                                              , C.operand1 =
+                                                C.Int
+                                                { C.integerBits = 32
+                                                , C.integerValue = 2
+                                                }
+                                              }, [])
                           ],
               functionAttributes = [],
               metadata = []
@@ -1060,19 +1060,19 @@ tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
               callingConvention = CC.C,
               returnAttributes = [],
               function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [i32] False)) (Name "myfunc2"))),
-              arguments = [ (ConstantOperand C.SDiv
-                                            { C.exact = True
-                                            , C.operand0 =
-                                              C.Int
-                                              { C.integerBits = 32
-                                              , C.integerValue = 4
-                                              }
-                                            , C.operand1 =
-                                              C.Int
-                                              { C.integerBits = 32
-                                              , C.integerValue = 2
-                                              }
-                                            }, [])
+              arguments = [ ( ConstantOperand C.SDiv
+                                              { C.exact = True
+                                              , C.operand0 =
+                                                C.Int
+                                                { C.integerBits = 32
+                                                , C.integerValue = 4
+                                                }
+                                              , C.operand1 =
+                                                C.Int
+                                                { C.integerBits = 32
+                                                , C.integerValue = 2
+                                                }
+                                              }, [])
                           ],
               functionAttributes = [],
               metadata = []
@@ -1084,7 +1084,7 @@ tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
               callingConvention = CC.C,
               returnAttributes = [],
               function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [float] False)) (Name "myfunc3"))),
-              arguments = [ (ConstantOperand C.FDiv
+              arguments = [ ( ConstantOperand C.FDiv
                                               { C.operand0 =
                                                 C.Float
                                                 { C.floatValue = Float.Single 1.5
@@ -1105,18 +1105,18 @@ tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
               callingConvention = CC.C,
               returnAttributes = [],
               function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [i32] False)) (Name "myfunc2"))),
-              arguments = [ (ConstantOperand C.URem
-                                            { C.operand0 =
-                                              C.Int
-                                              { C.integerBits = 32
-                                              , C.integerValue = 4
-                                              }
-                                            , C.operand1 =
-                                              C.Int
-                                              { C.integerBits = 32
-                                              , C.integerValue = 3
-                                              }
-                                            }, [])
+              arguments = [ ( ConstantOperand C.URem
+                                              { C.operand0 =
+                                                C.Int
+                                                { C.integerBits = 32
+                                                , C.integerValue = 4
+                                                }
+                                              , C.operand1 =
+                                                C.Int
+                                                { C.integerBits = 32
+                                                , C.integerValue = 3
+                                                }
+                                              }, [])
                           ],
               functionAttributes = [],
               metadata = []
@@ -1128,18 +1128,18 @@ tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
               callingConvention = CC.C,
               returnAttributes = [],
               function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [i32] False)) (Name "myfunc2"))),
-              arguments = [ (ConstantOperand C.SRem
-                                            { C.operand0 =
-                                              C.Int
-                                              { C.integerBits = 32
-                                              , C.integerValue = 4
-                                              }
-                                            , C.operand1 =
-                                              C.Int
-                                              { C.integerBits = 32
-                                              , C.integerValue = 3
-                                              }
-                                            }, [])
+              arguments = [ ( ConstantOperand C.SRem
+                                              { C.operand0 =
+                                                C.Int
+                                                { C.integerBits = 32
+                                                , C.integerValue = 4
+                                                }
+                                              , C.operand1 =
+                                                C.Int
+                                                { C.integerBits = 32
+                                                , C.integerValue = 3
+                                                }
+                                              }, [])
                           ],
               functionAttributes = [],
               metadata = []
@@ -1151,7 +1151,7 @@ tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
               callingConvention = CC.C,
               returnAttributes = [],
               function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [float] False)) (Name "myfunc3"))),
-              arguments = [ (ConstantOperand C.FRem
+              arguments = [ ( ConstantOperand C.FRem
                                               { C.operand0 =
                                                 C.Float
                                                 { C.floatValue = Float.Single 1.5
@@ -1172,20 +1172,20 @@ tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
               callingConvention = CC.C,
               returnAttributes = [],
               function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [i32] False)) (Name "myfunc2"))),
-              arguments = [ (ConstantOperand C.Shl
-                                            { C.nsw = False
-                                            , C.nuw = False
-                                            , C.operand0 =
-                                              C.Int
-                                              { C.integerBits = 32
-                                              , C.integerValue = 1
-                                              }
-                                            , C.operand1 =
-                                              C.Int
-                                              { C.integerBits = 32
-                                              , C.integerValue = 2
-                                              }
-                                            }, [])
+              arguments = [ ( ConstantOperand C.Shl
+                                              { C.nsw = False
+                                              , C.nuw = False
+                                              , C.operand0 =
+                                                C.Int
+                                                { C.integerBits = 32
+                                                , C.integerValue = 1
+                                                }
+                                              , C.operand1 =
+                                                C.Int
+                                                { C.integerBits = 32
+                                                , C.integerValue = 2
+                                                }
+                                              }, [])
                           ],
               functionAttributes = [],
               metadata = []
@@ -1197,7 +1197,7 @@ tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
               callingConvention = CC.C,
               returnAttributes = [],
               function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [i32] False)) (Name "myfunc2"))),
-              arguments = [ (ConstantOperand C.Shl
+              arguments = [ ( ConstantOperand C.Shl
                                               { C.nsw = True
                                               , C.nuw = False
                                               , C.operand0 =
@@ -1222,13 +1222,13 @@ tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
               callingConvention = CC.C,
               returnAttributes = [],
               function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [i32] False)) (Name "myfunc2"))),
-              arguments = [ (ConstantOperand C.Shl
+              arguments = [ ( ConstantOperand C.Shl
                                               { C.nsw = False
                                               , C.nuw = True
                                               , C.operand0 =
                                                 C.Int
                                                 { C.integerBits = 32
-                                                , C.integerValue = 1
+                                              , C.integerValue = 1
                                                 }
                                               , C.operand1 =
                                                 C.Int
@@ -1247,7 +1247,7 @@ tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
               callingConvention = CC.C,
               returnAttributes = [],
               function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [i32] False)) (Name "myfunc2"))),
-              arguments = [ (ConstantOperand C.Shl
+              arguments = [ ( ConstantOperand C.Shl
                                               { C.nsw = True
                                               , C.nuw = True
                                               , C.operand0 =
@@ -1272,19 +1272,19 @@ tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
               callingConvention = CC.C,
               returnAttributes = [],
               function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [i32] False)) (Name "myfunc2"))),
-              arguments = [ (ConstantOperand C.LShr
-                                            { C.exact = False
-                                            , C.operand0 =
-                                              C.Int
-                                              { C.integerBits = 32
-                                              , C.integerValue = 1
-                                              }
-                                            , C.operand1 =
-                                              C.Int
-                                              { C.integerBits = 32
-                                              , C.integerValue = 2
-                                              }
-                                            }, [])
+              arguments = [ ( ConstantOperand C.LShr
+                                              { C.exact = False
+                                              , C.operand0 =
+                                                C.Int
+                                                { C.integerBits = 32
+                                                , C.integerValue = 1
+                                                }
+                                              , C.operand1 =
+                                                C.Int
+                                                { C.integerBits = 32
+                                                , C.integerValue = 2
+                                                }
+                                              }, [])
                           ],
               functionAttributes = [],
               metadata = []
@@ -1296,19 +1296,19 @@ tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
               callingConvention = CC.C,
               returnAttributes = [],
               function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [i32] False)) (Name "myfunc2"))),
-              arguments = [ (ConstantOperand C.LShr
-                                            { C.exact = True
-                                            , C.operand0 =
-                                              C.Int
-                                              { C.integerBits = 32
-                                              , C.integerValue = 1
-                                              }
-                                            , C.operand1 =
-                                              C.Int
-                                              { C.integerBits = 32
-                                              , C.integerValue = 2
-                                              }
-                                            }, [])
+              arguments = [ ( ConstantOperand C.LShr
+                                              { C.exact = True
+                                              , C.operand0 =
+                                                C.Int
+                                                { C.integerBits = 32
+                                                , C.integerValue = 1
+                                                }
+                                              , C.operand1 =
+                                                C.Int
+                                                { C.integerBits = 32
+                                                , C.integerValue = 2
+                                                }
+                                              }, [])
                           ],
               functionAttributes = [],
               metadata = []
@@ -1320,19 +1320,19 @@ tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
               callingConvention = CC.C,
               returnAttributes = [],
               function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [i32] False)) (Name "myfunc2"))),
-              arguments = [ (ConstantOperand C.AShr
-                                            { C.exact = False
-                                            , C.operand0 =
-                                              C.Int
-                                              { C.integerBits = 32
-                                              , C.integerValue = 1
-                                              }
-                                            , C.operand1 =
-                                              C.Int
-                                              { C.integerBits = 32
-                                              , C.integerValue = 2
-                                              }
-                                            }, [])
+              arguments = [ ( ConstantOperand C.AShr
+                                              { C.exact = False
+                                              , C.operand0 =
+                                                C.Int
+                                                { C.integerBits = 32
+                                                , C.integerValue = 1
+                                                }
+                                              , C.operand1 =
+                                                C.Int
+                                                { C.integerBits = 32
+                                                , C.integerValue = 2
+                                                }
+                                              }, [])
                           ],
               functionAttributes = [],
               metadata = []
@@ -1344,19 +1344,19 @@ tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
               callingConvention = CC.C,
               returnAttributes = [],
               function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [i32] False)) (Name "myfunc2"))),
-              arguments = [ (ConstantOperand C.AShr
-                                            { C.exact = True
-                                            , C.operand0 =
-                                              C.Int
-                                              { C.integerBits = 32
-                                              , C.integerValue = 1
-                                              }
-                                            , C.operand1 =
-                                              C.Int
-                                              { C.integerBits = 32
-                                              , C.integerValue = 2
-                                              }
-                                            }, [])
+              arguments = [ ( ConstantOperand C.AShr
+                                              { C.exact = True
+                                              , C.operand0 =
+                                                C.Int
+                                                { C.integerBits = 32
+                                                , C.integerValue = 1
+                                                }
+                                              , C.operand1 =
+                                                C.Int
+                                                { C.integerBits = 32
+                                                , C.integerValue = 2
+                                                }
+                                              }, [])
                           ],
               functionAttributes = [],
               metadata = []
@@ -1368,18 +1368,18 @@ tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
               callingConvention = CC.C,
               returnAttributes = [],
               function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [i32] False)) (Name "myfunc2"))),
-              arguments = [ (ConstantOperand C.And
-                                            { C.operand0 =
-                                              C.Int
-                                              { C.integerBits = 32
-                                              , C.integerValue = 1
-                                              }
-                                            , C.operand1 =
-                                              C.Int
-                                              { C.integerBits = 32
-                                              , C.integerValue = 2
-                                              }
-                                            }, [])
+              arguments = [ ( ConstantOperand C.And
+                                              { C.operand0 =
+                                                C.Int
+                                                { C.integerBits = 32
+                                                , C.integerValue = 1
+                                                }
+                                              , C.operand1 =
+                                                C.Int
+                                                { C.integerBits = 32
+                                                , C.integerValue = 2
+                                                }
+                                              }, [])
                           ],
               functionAttributes = [],
               metadata = []
@@ -1391,18 +1391,18 @@ tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
               callingConvention = CC.C,
               returnAttributes = [],
               function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [i32] False)) (Name "myfunc2"))),
-              arguments = [ (ConstantOperand C.Or
-                                            { C.operand0 =
-                                              C.Int
-                                              { C.integerBits = 32
-                                              , C.integerValue = 1
-                                              }
-                                            , C.operand1 =
-                                              C.Int
-                                              { C.integerBits = 32
-                                              , C.integerValue = 2
-                                              }
-                                            }, [])
+              arguments = [ ( ConstantOperand C.Or
+                                              { C.operand0 =
+                                                C.Int
+                                                { C.integerBits = 32
+                                                , C.integerValue = 1
+                                                }
+                                              , C.operand1 =
+                                                C.Int
+                                                { C.integerBits = 32
+                                                , C.integerValue = 2
+                                                }
+                                              }, [])
                           ],
               functionAttributes = [],
               metadata = []
@@ -1414,18 +1414,18 @@ tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
               callingConvention = CC.C,
               returnAttributes = [],
               function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [i32] False)) (Name "myfunc2"))),
-              arguments = [ (ConstantOperand C.Xor
-                                            { C.operand0 =
-                                              C.Int
-                                              { C.integerBits = 32
-                                              , C.integerValue = 1
-                                              }
-                                            , C.operand1 =
-                                              C.Int
-                                              { C.integerBits = 32
-                                              , C.integerValue = 2
-                                              }
-                                            }, [])
+              arguments = [ ( ConstantOperand C.Xor
+                                              { C.operand0 =
+                                                C.Int
+                                                { C.integerBits = 32
+                                                , C.integerValue = 1
+                                                }
+                                              , C.operand1 =
+                                                C.Int
+                                                { C.integerBits = 32
+                                                , C.integerValue = 2
+                                                }
+                                              }, [])
                           ],
               functionAttributes = [],
               metadata = []
@@ -1437,27 +1437,27 @@ tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
               callingConvention = CC.C,
               returnAttributes = [],
               function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [ptr i8] False)) (Name "myfunc"))),
-              arguments = [ (ConstantOperand C.GetElementPtr
-                                            { C.inBounds = False
-                                            , C.address =
-                                              C.GlobalReference
-                                                (ptr
-                                                    ArrayType
-                                                    { nArrayElements = 4
-                                                    , elementType = i8
-                                                    })
-                                                (Name "myglobal_str")
-                                            , C.indices =
-                                              [ C.Int
-                                                { C.integerBits = 32
-                                                , C.integerValue = 0
-                                                }
-                                              , C.Int
-                                                { C.integerBits = 32
-                                                , C.integerValue = 0
-                                                }
-                                              ]
-                                            }, [])
+              arguments = [ ( ConstantOperand C.GetElementPtr
+                                              { C.inBounds = False
+                                              , C.address =
+                                                C.GlobalReference
+                                                  (ptr
+                                                      ArrayType
+                                                      { nArrayElements = 4
+                                                      , elementType = i8
+                                                      })
+                                                  (Name "myglobal_str")
+                                              , C.indices =
+                                                [ C.Int
+                                                  { C.integerBits = 32
+                                                  , C.integerValue = 0
+                                                  }
+                                                , C.Int
+                                                  { C.integerBits = 32
+                                                  , C.integerValue = 0
+                                                  }
+                                                ]
+                                              }, [])
                           ],
               functionAttributes = [],
               metadata = []
@@ -1469,7 +1469,7 @@ tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
               callingConvention = CC.C,
               returnAttributes = [],
               function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [ptr i8] False)) (Name "myfunc"))),
-              arguments = [ (ConstantOperand C.GetElementPtr
+              arguments = [ ( ConstantOperand C.GetElementPtr
                                               { C.inBounds = True
                                               , C.address =
                                                 C.GlobalReference
@@ -1501,7 +1501,7 @@ tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
               callingConvention = CC.C,
               returnAttributes = [],
               function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [i8] False)) (Name "myfunc4"))),
-              arguments = [ (ConstantOperand C.Trunc
+              arguments = [ ( ConstantOperand C.Trunc
                                               { C.operand0 =
                                                 C.Int
                                                 { C.integerBits = 32
@@ -1520,7 +1520,7 @@ tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
               callingConvention = CC.C,
               returnAttributes = [],
               function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [i32] False)) (Name "myfunc2"))),
-              arguments = [ (ConstantOperand C.ZExt
+              arguments = [ ( ConstantOperand C.ZExt
                                               { C.operand0 =
                                                 C.Int
                                                 { C.integerBits = 8
@@ -1539,7 +1539,7 @@ tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
               callingConvention = CC.C,
               returnAttributes = [],
               function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [i32] False)) (Name "myfunc2"))),
-              arguments = [ (ConstantOperand C.SExt
+              arguments = [ ( ConstantOperand C.SExt
                                               { C.operand0 =
                                                 C.Int
                                                 { C.integerBits = 8
@@ -1558,7 +1558,7 @@ tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
               callingConvention = CC.C,
               returnAttributes = [],
               function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [i32] False)) (Name "myfunc2"))),
-              arguments = [ (ConstantOperand C.FPToUI
+              arguments = [ ( ConstantOperand C.FPToUI
                                               { C.operand0 =
                                                 C.Float
                                                 { C.floatValue = Float.Single 123.0
@@ -1576,7 +1576,7 @@ tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
               callingConvention = CC.C,
               returnAttributes = [],
               function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [i32] False)) (Name "myfunc2"))),
-              arguments = [ (ConstantOperand C.FPToSI
+              arguments = [ ( ConstantOperand C.FPToSI
                                               { C.operand0 =
                                                 C.Float
                                                 { C.floatValue = Float.Single 123.0
@@ -1594,7 +1594,7 @@ tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
               callingConvention = CC.C,
               returnAttributes = [],
               function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [float] False)) (Name "myfunc3"))),
-              arguments = [ (ConstantOperand C.UIToFP
+              arguments = [ ( ConstantOperand C.UIToFP
                                               { C.operand0 =
                                                 C.Int
                                                 { C.integerBits = 32
@@ -1613,7 +1613,7 @@ tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
               callingConvention = CC.C,
               returnAttributes = [],
               function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [float] False)) (Name "myfunc3"))),
-              arguments = [ (ConstantOperand C.SIToFP
+              arguments = [ ( ConstantOperand C.SIToFP
                                               { C.operand0 =
                                                 C.Int
                                                 { C.integerBits = 32
@@ -1632,7 +1632,7 @@ tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
               callingConvention = CC.C,
               returnAttributes = [],
               function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [float] False)) (Name "myfunc3"))),
-              arguments = [ (ConstantOperand C.FPTrunc
+              arguments = [ ( ConstantOperand C.FPTrunc
                                               { C.operand0 =
                                                 C.Float
                                                 { C.floatValue = Float.Double 123.0
@@ -1650,7 +1650,7 @@ tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
               callingConvention = CC.C,
               returnAttributes = [],
               function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [double] False)) (Name "myfunc5"))),
-              arguments = [ (ConstantOperand C.FPExt
+              arguments = [ ( ConstantOperand C.FPExt
                                               { C.operand0 =
                                                 C.Float
                                                 { C.floatValue = Float.Single 123.0
@@ -1668,7 +1668,7 @@ tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
               callingConvention = CC.C,
               returnAttributes = [],
               function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [i32] False)) (Name "myfunc2"))),
-              arguments = [ (ConstantOperand C.PtrToInt
+              arguments = [ ( ConstantOperand C.PtrToInt
                                               { C.operand0 = C.GlobalReference (ptr i8) (Name "myptr")
                                               , C.type' = i32
                                               }, [])
@@ -1683,7 +1683,7 @@ tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
               callingConvention = CC.C,
               returnAttributes = [],
               function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [ptr i8] False)) (Name "myfunc"))),
-              arguments = [ (ConstantOperand C.IntToPtr
+              arguments = [ ( ConstantOperand C.IntToPtr
                                               { C.operand0 =
                                                 C.Int
                                                 { C.integerBits = 32
