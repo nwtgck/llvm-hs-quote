@@ -106,14 +106,14 @@ instructions =
   --   -- fcmp
   -- , [lli|call void @myfunc7(i1 fcmp oeq (float 1.5, float 0.5))|]
   -- , [lli|call void @myfunc7(i1 fcmp one (float 1.5, float 0.5))|]
-    -- select
-  , [lli|call void @myfunc2(i32 select (i1 false, i32 1, i32 2))|]
-    -- extractelement
-  , [lli|call void @myfunc2(i32 extractelement (<4 x i32> undef, i32 1))|]
-    -- insertelement
-  , [lli|call void @myfunc8(<5 x i32> insertelement (<5 x i32> undef, i32 35, i32 0))|]
-    -- shufflevector
-  , [lli|call void @myfunc9(<3 x i32> shufflevector (<3 x i32> undef, <3 x i32> undef, <3 x i32> <i32 0, i32 4, i32 1>))|]
+  --   -- select
+  -- , [lli|call void @myfunc2(i32 select (i1 false, i32 1, i32 2))|]
+  --   -- extractelement
+  -- , [lli|call void @myfunc2(i32 extractelement (<4 x i32> undef, i32 1))|]
+  --   -- insertelement
+  -- , [lli|call void @myfunc8(<5 x i32> insertelement (<5 x i32> undef, i32 35, i32 0))|]
+  --   -- shufflevector
+  -- , [lli|call void @myfunc9(<3 x i32> shufflevector (<3 x i32> undef, <3 x i32> undef, <3 x i32> <i32 0, i32 4, i32 1>))|]
     -- extractvalue
   , [lli|call void @myfunc2(i32 extractvalue ({i32, i8} {i32 23, i8 2}, 0))|]
     -- insertvalue
@@ -1867,6 +1867,137 @@ tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
               metadata = []
             },
             [lli|call void @myfunc(i8* getelementptr ([4 x i8]* @myglobal_str, i32 0, i32 0))|]),
+          ("call with constant select",
+            Call {
+              tailCallKind = Nothing,
+              callingConvention = CC.C,
+              returnAttributes = [],
+              function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [i32] False)) (Name "myfunc2"))),
+              arguments = [ ( ConstantOperand C.Select
+                                              { C.condition' =
+                                                C.Int
+                                                { C.integerBits = 1
+                                                , C.integerValue = 0
+                                                }
+                                              , C.trueValue =
+                                                C.Int
+                                                { C.integerBits = 32
+                                                , C.integerValue = 1
+                                                }
+                                              , C.falseValue =
+                                                C.Int
+                                                { C.integerBits = 32
+                                                , C.integerValue = 2
+                                                }
+                                              }, [])
+                          ],
+              functionAttributes = [],
+              metadata = []
+            },
+            [lli|call void @myfunc2(i32 select (i1 false, i32 1, i32 2))|]),
+          ("call with constant extractelement",
+            Call {
+              tailCallKind = Nothing,
+              callingConvention = CC.C,
+              returnAttributes = [],
+              function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [i32] False)) (Name "myfunc2"))),
+              arguments = [ ( ConstantOperand C.ExtractElement
+                                              { C.vector =
+                                                C.Undef
+                                                { C.constantType =
+                                                  VectorType
+                                                  { nVectorElements = 4
+                                                  , elementType = i32
+                                                  }
+                                                }
+                                              , C.index =
+                                                C.Int
+                                                { C.integerBits = 32
+                                                , C.integerValue = 1
+                                                }
+                                              }, [])
+                          ],
+              functionAttributes = [],
+              metadata = []
+            },
+            [lli|call void @myfunc2(i32 extractelement (<4 x i32> undef, i32 1))|]),
+          ("call with constant insertelement",
+            Call {
+              tailCallKind = Nothing,
+              callingConvention = CC.C,
+              returnAttributes = [],
+              function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [VectorType { nVectorElements = 5, elementType = i32 }] False)) (Name "myfunc8"))),
+              arguments = [ ( ConstantOperand C.InsertElement
+                                              { C.vector =
+                                                C.Undef
+                                                { C.constantType =
+                                                  VectorType
+                                                  { nVectorElements = 5
+                                                  , elementType = i32
+                                                  }
+                                                }
+                                              , C.element =
+                                                C.Int
+                                                { C.integerBits = 32
+                                                , C.integerValue = 35
+                                                }
+                                              , C.index =
+                                                C.Int
+                                                { C.integerBits = 32
+                                                , C.integerValue = 0
+                                                }
+                                              }, [])
+                          ],
+              functionAttributes = [],
+              metadata = []
+            },
+            [lli|call void @myfunc8(<5 x i32> insertelement (<5 x i32> undef, i32 35, i32 0))|]),
+          ("call with constant shufflevector",
+            Call {
+              tailCallKind = Nothing,
+              callingConvention = CC.C,
+              returnAttributes = [],
+              function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [VectorType { nVectorElements = 3, elementType = i32 }] False)) (Name "myfunc9"))),
+              arguments = [ ( ConstantOperand C.ShuffleVector
+                                              { C.operand0 =
+                                                C.Undef
+                                                { C.constantType =
+                                                  VectorType
+                                                  { nVectorElements = 3
+                                                  , elementType = i32
+                                                  }
+                                                }
+                                              , C.operand1 =
+                                                C.Undef
+                                                { C.constantType =
+                                                  VectorType
+                                                  { nVectorElements = 3
+                                                  , elementType = i32
+                                                  }
+                                                }
+                                              , C.mask =
+                                                C.Vector
+                                                { C.memberValues =
+                                                  [ C.Int
+                                                    { C.integerBits = 32
+                                                    , C.integerValue = 0
+                                                    }
+                                                  , C.Int
+                                                    { C.integerBits = 32
+                                                    , C.integerValue = 4
+                                                    }
+                                                  , C.Int
+                                                    { C.integerBits = 32
+                                                    , C.integerValue = 1
+                                                    }
+                                                  ]
+                                                }
+                                              }, [])
+                          ],
+              functionAttributes = [],
+              metadata = []
+            },
+            [lli|call void @myfunc9(<3 x i32> shufflevector (<3 x i32> undef, <3 x i32> undef, <3 x i32> <i32 0, i32 4, i32 1>))|]),
           ("call with constant getelementptr inbounds",
             Call {
               tailCallKind = Nothing,
