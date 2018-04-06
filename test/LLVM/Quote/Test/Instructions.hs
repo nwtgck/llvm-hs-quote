@@ -82,24 +82,24 @@ instructions =
   -- , [lli|call void @myfunc2(i32 zext (i8 2 to i32))|]
   --   -- sext
   -- , [lli|call void @myfunc2(i32 sext (i8 2 to i32))|]
-    -- fptoui
-  , [lli|call void @myfunc2(i32 fptoui (float 123.0 to i32))|]
-   -- fptosi
-  , [lli|call void @myfunc2(i32 fptosi (float 123.0 to i32))|]
-    -- uitofp
-  , [lli|call void @myfunc3(float uitofp (i32 123 to float))|]
-    -- sitofp
-  , [lli|call void @myfunc3(float sitofp (i32 123 to float))|]
-    -- fptrunc
-  , [lli|call void @myfunc3(float fptrunc (double 123.0 to float))|]
-    -- fpext
-  , [lli|call void @myfunc5(double fpext (float 123.0 to double))|]
-    -- ptrtoint
-  , [lli|call void @myfunc2(i32 ptrtoint (i8* null to i32))|]
-    -- inttoptr
-  , [lli|call void @myfunc(i8* inttoptr (i32 4 to i8*))|]
-    -- addrspacecast
-  , [lli|call void @myfunc6(i8 addrspace(1)* addrspacecast (i32* null to i8 addrspace(1)*))|]
+  --   -- fptoui
+  -- , [lli|call void @myfunc2(i32 fptoui (float 123.0 to i32))|]
+  --  -- fptosi
+  -- , [lli|call void @myfunc2(i32 fptosi (float 123.0 to i32))|]
+  --   -- uitofp
+  -- , [lli|call void @myfunc3(float uitofp (i32 123 to float))|]
+  --   -- sitofp
+  -- , [lli|call void @myfunc3(float sitofp (i32 123 to float))|]
+  --   -- fptrunc
+  -- , [lli|call void @myfunc3(float fptrunc (double 123.0 to float))|]
+  --   -- fpext
+  -- , [lli|call void @myfunc5(double fpext (float 123.0 to double))|]
+  --   -- ptrtoint
+  -- , [lli|call void @myfunc2(i32 ptrtoint (i8* null to i32))|]
+  --   -- inttoptr
+  -- , [lli|call void @myfunc(i8* inttoptr (i32 4 to i8*))|]
+  --   -- addrspacecast
+  -- , [lli|call void @myfunc6(i8 addrspace(1)* addrspacecast (i32* null to i8 addrspace(1)*))|]
     -- icmp
   , [lli|call void @myfunc7(i1 icmp eq (i32 4, i32 1))|]
   , [lli|call void @myfunc7(i1 icmp ne (i32 4, i32 1))|]
@@ -684,23 +684,6 @@ tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
              metadata = []
            },
            [lli|call void @0(i32 %0, float %1, i32* %2, i64 %3, i1 %4, <2 x i32> %5, { i32, i32 } %6)|]),
-          ("call with constant bitcast",
-            Call {
-              tailCallKind = Nothing,
-              callingConvention = CC.C,
-              returnAttributes = [],
-              function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [ptr i8] False)) (Name "myfunc"))),
-              arguments = [ ( ConstantOperand
-                                C.BitCast
-                                { C.operand0 = (C.GlobalReference (ptr i1) (Name "myglobal"))
-                                , C.type' = (ptr i8)
-                                }
-                            , [])
-                          ],
-              functionAttributes = [],
-              metadata = []
-            },
-            [lli|call void @myfunc(i8* bitcast (i1* @myglobal to i8*))|]),
           ("call with nested constant bitcast",
             Call {
               tailCallKind = Nothing,
@@ -1582,6 +1565,184 @@ tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
               metadata = []
             },
             [lli|call void @myfunc2(i32 sext (i8 2 to i32))|]),
+          ("call with constant fptoui",
+            Call {
+              tailCallKind = Nothing,
+              callingConvention = CC.C,
+              returnAttributes = [],
+              function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [i32] False)) (Name "myfunc2"))),
+              arguments = [ (ConstantOperand C.FPToUI
+                                              { C.operand0 =
+                                                C.Float
+                                                { C.floatValue = Float.Single 123.0
+                                                }
+                                              , C.type' = i32
+                                              }, [])
+                          ],
+              functionAttributes = [],
+              metadata = []
+            },
+            [lli|call void @myfunc2(i32 fptoui (float 123.0 to i32))|]),
+          ("call with constant fptosi",
+            Call {
+              tailCallKind = Nothing,
+              callingConvention = CC.C,
+              returnAttributes = [],
+              function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [i32] False)) (Name "myfunc2"))),
+              arguments = [ (ConstantOperand C.FPToSI
+                                              { C.operand0 =
+                                                C.Float
+                                                { C.floatValue = Float.Single 123.0
+                                                }
+                                              , C.type' = i32
+                                              }, [])
+                          ],
+              functionAttributes = [],
+              metadata = []
+            },
+            [lli|call void @myfunc2(i32 fptosi (float 123.0 to i32))|]),
+          ("call with constant uitofp",
+            Call {
+              tailCallKind = Nothing,
+              callingConvention = CC.C,
+              returnAttributes = [],
+              function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [float] False)) (Name "myfunc3"))),
+              arguments = [ (ConstantOperand C.UIToFP
+                                              { C.operand0 =
+                                                C.Int
+                                                { C.integerBits = 32
+                                                , C.integerValue = 123
+                                                }
+                                              , C.type' = float
+                                              }, [])
+                          ],
+              functionAttributes = [],
+              metadata = []
+            },
+            [lli|call void @myfunc3(float uitofp (i32 123 to float))|]),
+          ("call with constant sitofp",
+            Call {
+              tailCallKind = Nothing,
+              callingConvention = CC.C,
+              returnAttributes = [],
+              function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [float] False)) (Name "myfunc3"))),
+              arguments = [ (ConstantOperand C.SIToFP
+                                              { C.operand0 =
+                                                C.Int
+                                                { C.integerBits = 32
+                                                , C.integerValue = 123
+                                                }
+                                              , C.type' = float
+                                              }, [])
+                          ],
+              functionAttributes = [],
+              metadata = []
+            },
+            [lli|call void @myfunc3(float sitofp (i32 123 to float))|]),
+          ("call with constant fptrunc",
+            Call {
+              tailCallKind = Nothing,
+              callingConvention = CC.C,
+              returnAttributes = [],
+              function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [float] False)) (Name "myfunc3"))),
+              arguments = [ (ConstantOperand C.FPTrunc
+                                              { C.operand0 =
+                                                C.Float
+                                                { C.floatValue = Float.Double 123.0
+                                                }
+                                              , C.type' = float
+                                              }, [])
+                          ],
+              functionAttributes = [],
+              metadata = []
+            },
+            [lli|call void @myfunc3(float fptrunc (double 123.0 to float))|]),
+          ("call with constant fpext",
+            Call {
+              tailCallKind = Nothing,
+              callingConvention = CC.C,
+              returnAttributes = [],
+              function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [double] False)) (Name "myfunc5"))),
+              arguments = [ (ConstantOperand C.FPExt
+                                              { C.operand0 =
+                                                C.Float
+                                                { C.floatValue = Float.Single 123.0
+                                                }
+                                              , C.type' = double
+                                              }, [])
+                          ],
+              functionAttributes = [],
+              metadata = []
+            },
+            [lli|call void @myfunc5(double fpext (float 123.0 to double))|]),
+          ("call with constant ptrtoint",
+            Call {
+              tailCallKind = Nothing,
+              callingConvention = CC.C,
+              returnAttributes = [],
+              function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [i32] False)) (Name "myfunc2"))),
+              arguments = [ (ConstantOperand C.PtrToInt
+                                              { C.operand0 = C.GlobalReference (ptr i8) (Name "myptr")
+                                              , C.type' = i32
+                                              }, [])
+                          ],
+              functionAttributes = [],
+              metadata = []
+            },
+            [lli|call void @myfunc2(i32 ptrtoint (i8* @myptr to i32))|]),
+          ("call with constant inttoptr",
+            Call {
+              tailCallKind = Nothing,
+              callingConvention = CC.C,
+              returnAttributes = [],
+              function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [ptr i8] False)) (Name "myfunc"))),
+              arguments = [ (ConstantOperand C.IntToPtr
+                                              { C.operand0 =
+                                                C.Int
+                                                { C.integerBits = 32
+                                                , C.integerValue = 4
+                                                }
+                                              , C.type' = ptr i8
+                                              }, [])
+                          ],
+              functionAttributes = [],
+              metadata = []
+            },
+            [lli|call void @myfunc(i8* inttoptr (i32 4 to i8*))|]),
+          ("call with constant bitcast",
+            Call {
+              tailCallKind = Nothing,
+              callingConvention = CC.C,
+              returnAttributes = [],
+              function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [ptr i8] False)) (Name "myfunc"))),
+              arguments = [ ( ConstantOperand
+                                C.BitCast
+                                { C.operand0 = (C.GlobalReference (ptr i1) (Name "myglobal"))
+                                , C.type' = (ptr i8)
+                                }
+                            , [])
+                          ],
+              functionAttributes = [],
+              metadata = []
+            },
+            [lli|call void @myfunc(i8* bitcast (i1* @myglobal to i8*))|]),
+          ("call with constant addrspacecast",
+            Call {
+              tailCallKind = Nothing,
+              callingConvention = CC.C,
+              returnAttributes = [],
+              function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [PointerType (IntegerType 8) (AddrSpace 1)] False)) (Name "myfunc6"))),
+              arguments = [ ( ConstantOperand
+                                C.AddrSpaceCast
+                                { C.operand0 = (C.GlobalReference (ptr i32) (Name "myglobal"))
+                                , C.type' = PointerType (IntegerType 8) (AddrSpace 1)
+                                }
+                            , [])
+                          ],
+              functionAttributes = [],
+              metadata = []
+            },
+            [lli|call void @myfunc6(i8 addrspace(1)* addrspacecast (i32* @myglobal to i8 addrspace(1)*))|]),
           ("call with constant getelementptr",
             Call {
               tailCallKind = Nothing,
@@ -1645,22 +1806,7 @@ tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
               functionAttributes = [],
               metadata = []
             },
-            [lli|call void @myfunc(i8* getelementptr inbounds ([4 x i8]* @myglobal_str, i32 0, i32 0))|]),
-          ("call with constant ptrtoint",
-            Call {
-              tailCallKind = Nothing,
-              callingConvention = CC.C,
-              returnAttributes = [],
-              function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [i32] False)) (Name "myfunc2"))),
-              arguments = [ (ConstantOperand C.PtrToInt
-                                              { C.operand0 = C.GlobalReference (ptr i8) (Name "myptr")
-                                              , C.type' = i32
-                                              }, [])
-                          ],
-              functionAttributes = [],
-              metadata = []
-            },
-            [lli|call void @myfunc2(i32 ptrtoint (i8* @myptr to i32))|])
+            [lli|call void @myfunc(i8* getelementptr inbounds ([4 x i8]* @myglobal_str, i32 0, i32 0))|])
          ]
    ],
 
