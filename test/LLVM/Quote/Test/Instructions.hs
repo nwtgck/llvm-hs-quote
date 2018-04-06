@@ -100,12 +100,12 @@ instructions =
   -- , [lli|call void @myfunc(i8* inttoptr (i32 4 to i8*))|]
   --   -- addrspacecast
   -- , [lli|call void @myfunc6(i8 addrspace(1)* addrspacecast (i32* null to i8 addrspace(1)*))|]
-    -- icmp
-  , [lli|call void @myfunc7(i1 icmp eq (i32 4, i32 1))|]
-  , [lli|call void @myfunc7(i1 icmp ne (i32 4, i32 1))|]
-    -- fcmp
-  , [lli|call void @myfunc7(i1 fcmp oeq (float 1.5, float 0.5))|]
-  , [lli|call void @myfunc7(i1 fcmp one (float 1.5, float 0.5))|]
+  --   -- icmp
+  -- , [lli|call void @myfunc7(i1 icmp eq (i32 4, i32 1))|]
+  -- , [lli|call void @myfunc7(i1 icmp ne (i32 4, i32 1))|]
+  --   -- fcmp
+  -- , [lli|call void @myfunc7(i1 fcmp oeq (float 1.5, float 0.5))|]
+  -- , [lli|call void @myfunc7(i1 fcmp one (float 1.5, float 0.5))|]
     -- select
   , [lli|call void @myfunc2(i32 select (i1 false, i32 1, i32 2))|]
     -- extractelement
@@ -1743,6 +1743,98 @@ tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
               metadata = []
             },
             [lli|call void @myfunc6(i8 addrspace(1)* addrspacecast (i32* @myglobal to i8 addrspace(1)*))|]),
+          ("call with constant icmp eq",
+            Call {
+              tailCallKind = Nothing,
+              callingConvention = CC.C,
+              returnAttributes = [],
+              function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [i1] False)) (Name "myfunc7"))),
+              arguments = [ (ConstantOperand C.ICmp
+                                            { C.iPredicate = IPred.EQ
+                                            , C.operand0 =
+                                              C.Int
+                                              { C.integerBits = 32
+                                              , C.integerValue = 4
+                                              }
+                                            , C.operand1 =
+                                              C.Int
+                                              { C.integerBits = 32
+                                              , C.integerValue = 1
+                                              }
+                                            }, [])
+                          ],
+              functionAttributes = [],
+              metadata = []
+            },
+            [lli|call void @myfunc7(i1 icmp eq (i32 4, i32 1))|]),
+          ("call with constant icmp ne",
+            Call {
+              tailCallKind = Nothing,
+              callingConvention = CC.C,
+              returnAttributes = [],
+              function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [i1] False)) (Name "myfunc7"))),
+              arguments = [ ( ConstantOperand C.ICmp
+                                              { C.iPredicate = IPred.NE
+                                              , C.operand0 =
+                                                C.Int
+                                                { C.integerBits = 32
+                                                , C.integerValue = 4
+                                                }
+                                              , C.operand1 =
+                                                C.Int
+                                                { C.integerBits = 32
+                                                , C.integerValue = 1
+                                                }
+                                              }, [])
+                          ],
+              functionAttributes = [],
+              metadata = []
+            },
+            [lli|call void @myfunc7(i1 icmp ne (i32 4, i32 1))|]),
+          ("call with constant fcmp oeq",
+            Call {
+              tailCallKind = Nothing,
+              callingConvention = CC.C,
+              returnAttributes = [],
+              function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [i1] False)) (Name "myfunc7"))),
+              arguments = [ ( ConstantOperand C.FCmp
+                                              { C.fpPredicate = FPPred.OEQ
+                                              , C.operand0 =
+                                                C.Float
+                                                { C.floatValue = Float.Single 1.5
+                                                }
+                                              , C.operand1 =
+                                                C.Float
+                                                { C.floatValue = Float.Single 0.5
+                                                }
+                                              }, [])
+                          ],
+              functionAttributes = [],
+              metadata = []
+            },
+            [lli|call void @myfunc7(i1 fcmp oeq (float 1.5, float 0.5))|]),
+          ("call with constant fcmp one",
+            Call {
+              tailCallKind = Nothing,
+              callingConvention = CC.C,
+              returnAttributes = [],
+              function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [i1] False)) (Name "myfunc7"))),
+              arguments = [ ( ConstantOperand C.FCmp
+                                              { C.fpPredicate = FPPred.ONE
+                                              , C.operand0 =
+                                                C.Float
+                                                { C.floatValue = Float.Single 1.5
+                                                }
+                                              , C.operand1 =
+                                                C.Float
+                                                { C.floatValue = Float.Single 0.5
+                                                }
+                                              }, [])
+                          ],
+              functionAttributes = [],
+              metadata = []
+            },
+            [lli|call void @myfunc7(i1 fcmp one (float 1.5, float 0.5))|]),
           ("call with constant getelementptr",
             Call {
               tailCallKind = Nothing,
