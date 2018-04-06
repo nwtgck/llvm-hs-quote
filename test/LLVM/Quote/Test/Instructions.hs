@@ -607,18 +607,41 @@ tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
              metadata = []
            },
            [lli|call void @0(i32 %0, float %1, i32* %2, i64 %3, i1 %4, <2 x i32> %5, { i32, i32 } %6)|]),
-          ("call with nested constant bitcast",
+          ("call with nested constant expression",
             Call {
               tailCallKind = Nothing,
               callingConvention = CC.C,
               returnAttributes = [],
-              function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [ptr i8] False)) (Name "myfunc"))),
-              arguments = [ (ConstantOperand (C.BitCast (C.BitCast (C.GlobalReference (ptr i1) (Name "myglobal")) (ptr (IntegerType 3))) (ptr i8)), [])
+              function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [i32] False)) (Name "myfunc2"))),
+              arguments = [ (ConstantOperand C.Add
+                                            { C.nsw = False
+                                            , C.nuw = False
+                                            , C.operand0 =
+                                              C.Mul
+                                              { C.nsw = False
+                                              , C.nuw = False
+                                              , C.operand0 =
+                                                C.Int
+                                                { C.integerBits = 32
+                                                , C.integerValue = 5
+                                                }
+                                              , C.operand1 =
+                                                C.Int
+                                                { C.integerBits = 32
+                                                , C.integerValue = 10
+                                                }
+                                              }
+                                            , C.operand1 =
+                                              C.Int
+                                              { C.integerBits = 32
+                                              , C.integerValue = 2
+                                              }
+                                            }, [])
                           ],
               functionAttributes = [],
               metadata = []
             },
-            [lli|call void @myfunc(i8* bitcast (i3* bitcast (i1* @myglobal to i3*) to i8*))|]),
+            [lli|call void @myfunc2(i32 add (i32 mul (i32 5, i32 10), i32 2))|]),
           ("call with constant add",
             Call {
               tailCallKind = Nothing,
