@@ -43,83 +43,6 @@ retWithName ty name = [llt|ret $type:ty $id:name|]
 retWithOp :: Type -> Operand -> Terminator
 retWithOp ty op = [llt|ret $type:ty $opr:op|]
 
-
--- TODO: Move them to more strict test
-instructions :: [Instruction]
-instructions =
-  [ undefined  
-  --  -- sdiv
-  --   [lli|call void @myfunc2(i32 sdiv (i32 4, i32 2))|]
-  -- , [lli|call void @myfunc2(i32 sdiv exact (i32 4, i32 2))|]
-  --   -- fdiv
-  -- , [lli|call void @myfunc3(float fdiv (float 1.5, float 0.5))|]
-  --   -- urem
-  -- , [lli|call void @myfunc2(i32 urem (i32 4, i32 3))|]
-  --   -- srem
-  -- , [lli|call void @myfunc2(i32 srem (i32 4, i32 3))|]
-  --   -- frem
-  -- , [lli|call void @myfunc3(float frem (float 1.5, float 0.5))|]
-  -- shl
-  -- , [lli|call void @myfunc2(i32 shl (i32 1, i32 2))|]
-  -- , [lli|call void @myfunc2(i32 shl nsw (i32 1, i32 2))|]
-  -- , [lli|call void @myfunc2(i32 shl nuw (i32 1, i32 2))|]
-  -- , [lli|call void @myfunc2(i32 shl nsw nuw (i32 1, i32 2))|]
-  --   -- lshr
-  -- , [lli|call void @myfunc2(i32 lshr (i32 1, i32 2))|]
-  -- , [lli|call void @myfunc2(i32 lshr exact (i32 1, i32 2))|]
-  --   -- ashr
-  -- , [lli|call void @myfunc2(i32 ashr (i32 1, i32 2))|]
-  -- , [lli|call void @myfunc2(i32 ashr exact (i32 1, i32 2))|]
-  --   -- and
-  -- , [lli|call void @myfunc2(i32 and (i32 1, i32 2))|]
-  --   -- or
-  -- , [lli|call void @myfunc2(i32 or (i32 1, i32 2))|]
-  --   -- xor
-  -- , [lli|call void @myfunc2(i32 xor (i32 1, i32 2))|]
-  --   -- trunc
-  -- , [lli|call void @myfunc4(i8 trunc (i32 257 to i8))|]
-  --   -- zext
-  -- , [lli|call void @myfunc2(i32 zext (i8 2 to i32))|]
-  --   -- sext
-  -- , [lli|call void @myfunc2(i32 sext (i8 2 to i32))|]
-  --   -- fptoui
-  -- , [lli|call void @myfunc2(i32 fptoui (float 123.0 to i32))|]
-  --  -- fptosi
-  -- , [lli|call void @myfunc2(i32 fptosi (float 123.0 to i32))|]
-  --   -- uitofp
-  -- , [lli|call void @myfunc3(float uitofp (i32 123 to float))|]
-  --   -- sitofp
-  -- , [lli|call void @myfunc3(float sitofp (i32 123 to float))|]
-  --   -- fptrunc
-  -- , [lli|call void @myfunc3(float fptrunc (double 123.0 to float))|]
-  --   -- fpext
-  -- , [lli|call void @myfunc5(double fpext (float 123.0 to double))|]
-  --   -- ptrtoint
-  -- , [lli|call void @myfunc2(i32 ptrtoint (i8* null to i32))|]
-  --   -- inttoptr
-  -- , [lli|call void @myfunc(i8* inttoptr (i32 4 to i8*))|]
-  --   -- addrspacecast
-  -- , [lli|call void @myfunc6(i8 addrspace(1)* addrspacecast (i32* null to i8 addrspace(1)*))|]
-  --   -- icmp
-  -- , [lli|call void @myfunc7(i1 icmp eq (i32 4, i32 1))|]
-  -- , [lli|call void @myfunc7(i1 icmp ne (i32 4, i32 1))|]
-  --   -- fcmp
-  -- , [lli|call void @myfunc7(i1 fcmp oeq (float 1.5, float 0.5))|]
-  -- , [lli|call void @myfunc7(i1 fcmp one (float 1.5, float 0.5))|]
-  --   -- select
-  -- , [lli|call void @myfunc2(i32 select (i1 false, i32 1, i32 2))|]
-  --   -- extractelement
-  -- , [lli|call void @myfunc2(i32 extractelement (<4 x i32> undef, i32 1))|]
-  --   -- insertelement
-  -- , [lli|call void @myfunc8(<5 x i32> insertelement (<5 x i32> undef, i32 35, i32 0))|]
-  --   -- shufflevector
-  -- , [lli|call void @myfunc9(<3 x i32> shufflevector (<3 x i32> undef, <3 x i32> undef, <3 x i32> <i32 0, i32 4, i32 1>))|]
-    -- extractvalue
-  , [lli|call void @myfunc2(i32 extractvalue ({i32, i8} {i32 23, i8 2}, 0))|]
-    -- insertvalue
-  , [lli|call void @myfunc10({i32, i8} insertvalue ({i32, i8} {i32 41, i8 2}, i32 23, 0))|]
-  ]
-
 tests :: TestTree
 tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
   testGroup "regular" [
@@ -1998,6 +1921,69 @@ tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
               metadata = []
             },
             [lli|call void @myfunc9(<3 x i32> shufflevector (<3 x i32> undef, <3 x i32> undef, <3 x i32> <i32 0, i32 4, i32 1>))|]),
+          ("call with constant extractvalue",
+            Call {
+              tailCallKind = Nothing,
+              callingConvention = CC.C,
+              returnAttributes = [],
+              function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [i32] False)) (Name "myfunc2"))),
+              arguments = [ ( ConstantOperand C.ExtractValue
+                                              { C.aggregate =
+                                                C.Struct
+                                                { C.structName = Nothing
+                                                , C.isPacked = False
+                                                , C.memberValues =
+                                                  [ C.Int
+                                                    { C.integerBits = 32
+                                                    , C.integerValue = 23
+                                                    }
+                                                  , C.Int
+                                                    { C.integerBits = 8
+                                                    , C.integerValue = 2
+                                                    }
+                                                  ]
+                                                }
+                                              , C.indices' = [0]
+                                              }, [])
+                          ],
+              functionAttributes = [],
+              metadata = []
+            },
+            [lli|call void @myfunc2(i32 extractvalue ({i32, i8} {i32 23, i8 2}, 0))|]),
+          ("call with constant insertvalue",
+            Call {
+              tailCallKind = Nothing,
+              callingConvention = CC.C,
+              returnAttributes = [],
+              function = Right (ConstantOperand (C.GlobalReference (ptr (FunctionType void [StructureType {isPacked = False, elementTypes = [i32, i8]}] False)) (Name "myfunc10"))),
+              arguments = [ ( ConstantOperand C.InsertValue
+                                              { C.aggregate =
+                                                C.Struct
+                                                { C.structName = Nothing
+                                                , C.isPacked = False
+                                                , C.memberValues =
+                                                  [ C.Int
+                                                    { C.integerBits = 32
+                                                    , C.integerValue = 41
+                                                    }
+                                                  , C.Int
+                                                    { C.integerBits = 8
+                                                    , C.integerValue = 2
+                                                    }
+                                                  ]
+                                                }
+                                              , C.element =
+                                                C.Int
+                                                { C.integerBits = 32
+                                                , C.integerValue = 23
+                                                }
+                                              , C.indices' = [0]
+                                              }, [])
+                          ],
+              functionAttributes = [],
+              metadata = []
+            },
+            [lli|call void @myfunc10({i32, i8} insertvalue ({i32, i8} {i32 41, i8 2}, i32 23, 0))|]),
           ("call with constant getelementptr inbounds",
             Call {
               tailCallKind = Nothing,
