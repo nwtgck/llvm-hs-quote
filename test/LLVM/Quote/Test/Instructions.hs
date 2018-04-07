@@ -54,6 +54,10 @@ retWithOp ty op = [llt|ret $type:ty $opr:op|]
 usingConstantAdd1 :: Instruction
 usingConstantAdd1 = [lli|call void @myfunc2(i32 add (i32 1, i32 2))|]
 
+-- `declare` with function attribute
+def1 :: Definition
+def1 = [lldef|declare void @llvm.gcroot(i8**, i8*) nounwind|]
+
 tests :: TestTree
 tests = let a t = LocalReference t . UnName in testGroup "Instructions" [
   testGroup "regular" [
