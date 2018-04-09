@@ -715,14 +715,14 @@ instruction_ :
   | 'or' binOperands            { A.Or (fst $2) (snd $2) }
   | 'xor' binOperands           { A.Xor (fst $2) (snd $2) }
   | 'alloca' type mOperand alignment        { A.Alloca $2 $3 $4 }
-  | 'load' volatile tOperand alignment      { A.Load $2 $3 Nothing $4 }
-  | 'load' 'atomic' volatile tOperand atomicity alignment      { A.Load $3 $4 (Just $5) $6 }
+  | 'load' volatile type ',' tOperand alignment      { A.Load $2 $5 Nothing $6 }
+  | 'load' 'atomic' volatile type ',' tOperand atomicity alignment      { A.Load $3 $6 (Just $7) $8 }
   | 'store' volatile tOperand ',' tOperand alignment
                                             { A.Store $2 $5 $3 Nothing $6 }
   | 'store' 'atomic' volatile tOperand ',' tOperand atomicity alignment
                                             { A.Store $3 $6 $4 (Just $7) $8 }
-  | 'getelementptr' inBounds tOperand indices
-                                            { A.GetElementPtr $2 $3 (rev $4) }
+  | 'getelementptr' inBounds type ',' tOperand indices
+                                            { A.GetElementPtr $2 $5 (rev $6) }
   | 'fence' atomicity                       { A.Fence $2 }
   | 'cmpxchg' volatile tOperand ',' tOperand ',' tOperand atomicity
                                             { A.CmpXchg $2 $3 $5 $7 $8 A.Unordered }
@@ -983,8 +983,8 @@ global :: { A.Global }
 global :
     'define' linkage visibility cconv parameterAttributes type globalName '(' parameterList ')' fAttributes section alignment gc '{' instructions '}'
       { A.Function $2 $3 Nothing $4 (rev $5) $6 $7 $9 (map Right $ rev $11) $12 Nothing $13 $14 Nothing (rev $16) Nothing }
-  | 'declare' linkage visibility cconv parameterAttributes type globalName '(' parameterListD ')' alignment gc
-      { A.Function $2 $3 Nothing $4 (rev $5) $6 $7 $9 [] Nothing Nothing $11 $12 Nothing [] Nothing }
+  | 'declare' linkage visibility cconv parameterAttributes type globalName '(' parameterListD ')' fAttributes alignment gc
+      { A.Function $2 $3 Nothing $4 (rev $5) $6 $7 $9 (map Right $ rev $11) Nothing Nothing $12 $13 Nothing [] Nothing }
   | globalName '=' linkage visibility isConstant type mConstant alignment
       { A.GlobalVariable $1 $3 $4 Nothing Nothing Nothing $5 $6 (A.AddrSpace 0) ($7 $6) Nothing Nothing $8 }
   | globalName '=' visibility 'alias' linkage type constant
