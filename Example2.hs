@@ -15,7 +15,7 @@ saxpy = [Q.llmod|
 
 ; (from: https://llvm.org/docs/LangRef.html#llvm-donothing-intrinsic)
 ; (from: https://stackoverflow.com/a/29419659/2885946)
-declare void @llvm.donothing()
+declare void @llvm.donothing() nounwind readnone
 
 define void @saxpy(i32* noalias nocapture %x, i32* noalias nocapture %y, i32 %a, i64 %i) {
 entry:
